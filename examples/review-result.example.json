@@ -1,0 +1,32 @@
+{
+  "review_id": "RV-001",
+  "story_id": "ST-002",
+  "review_type": "business",
+  "reviewer": "story-editor",
+  "status": "fail",
+  "created_at": "2026-04-24T03:30:00Z",
+  "summary": "The prompt package is structurally complete but misses one required continuity cue from the approved outline.",
+  "artifact_paths": [
+    "artifacts/episode-01/scene-prompts.json"
+  ],
+  "findings": [
+    {
+      "severity": "error",
+      "gate": "business",
+      "location": "prompts[2]",
+      "artifact_path": "artifacts/episode-01/scene-prompts.json",
+      "message": "The third prompt drops the location transition described in the approved outline.",
+      "suggestion": "Restore the transition beat and make the scene handoff explicit in the prompt body.",
+      "code": "BUSINESS_CONTINUITY_MISSING"
+    }
+  ],
+  "decision": {
+    "next_status": "needs_revision",
+    "can_proceed": false,
+    "requires_human_signoff": false
+  },
+  "metadata": {
+    "round": 1
+  },
+  "extensions": {}
+}

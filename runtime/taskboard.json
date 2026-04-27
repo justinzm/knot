@@ -1,0 +1,4177 @@
+{
+  "project": "ai-shot-team-seedance",
+  "workflow": "content-production",
+  "description": "ai-shot-team-seedance: 30-episode content production pipeline",
+  "stories": [
+    {
+      "id": "EP-001",
+      "title": "导演分析 EP01",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep01",
+      "priority": 1,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-01.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep01/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-001-business.json",
+          "runtime/reviews/EP-001-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep01",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-002",
+      "title": "服化道设计 EP01",
+      "stage": "art-design",
+      "description": "服化道设计 for ep01",
+      "priority": 2,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep01/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-001"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-002-business.json",
+          "runtime/reviews/EP-002-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep01",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-003",
+      "title": "分镜编写 EP01",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep01",
+      "priority": 3,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep01/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep01/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-002"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-003-business.json",
+          "runtime/reviews/EP-003-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep01",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-004",
+      "title": "导演分析 EP02",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep02",
+      "priority": 4,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-02.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep02/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-004-business.json",
+          "runtime/reviews/EP-004-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep02",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-005",
+      "title": "服化道设计 EP02",
+      "stage": "art-design",
+      "description": "服化道设计 for ep02",
+      "priority": 5,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep02/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-004"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-005-business.json",
+          "runtime/reviews/EP-005-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep02",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-006",
+      "title": "分镜编写 EP02",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep02",
+      "priority": 6,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep02/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep02/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-005"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-006-business.json",
+          "runtime/reviews/EP-006-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep02",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-007",
+      "title": "导演分析 EP03",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep03",
+      "priority": 7,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-03.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep03/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-007-business.json",
+          "runtime/reviews/EP-007-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep03",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-008",
+      "title": "服化道设计 EP03",
+      "stage": "art-design",
+      "description": "服化道设计 for ep03",
+      "priority": 8,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep03/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-007"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-008-business.json",
+          "runtime/reviews/EP-008-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep03",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-009",
+      "title": "分镜编写 EP03",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep03",
+      "priority": 9,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep03/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep03/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-008"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-009-business.json",
+          "runtime/reviews/EP-009-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep03",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-010",
+      "title": "导演分析 EP04",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep04",
+      "priority": 10,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-04.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep04/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-010-business.json",
+          "runtime/reviews/EP-010-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep04",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-011",
+      "title": "服化道设计 EP04",
+      "stage": "art-design",
+      "description": "服化道设计 for ep04",
+      "priority": 11,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep04/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-010"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-011-business.json",
+          "runtime/reviews/EP-011-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep04",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-012",
+      "title": "分镜编写 EP04",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep04",
+      "priority": 12,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep04/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep04/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-011"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-012-business.json",
+          "runtime/reviews/EP-012-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep04",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-013",
+      "title": "导演分析 EP05",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep05",
+      "priority": 13,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-05.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep05/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-013-business.json",
+          "runtime/reviews/EP-013-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep05",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-014",
+      "title": "服化道设计 EP05",
+      "stage": "art-design",
+      "description": "服化道设计 for ep05",
+      "priority": 14,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep05/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-013"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-014-business.json",
+          "runtime/reviews/EP-014-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep05",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-015",
+      "title": "分镜编写 EP05",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep05",
+      "priority": 15,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep05/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep05/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-014"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-015-business.json",
+          "runtime/reviews/EP-015-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep05",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-016",
+      "title": "导演分析 EP06",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep06",
+      "priority": 16,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-06.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep06/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-016-business.json",
+          "runtime/reviews/EP-016-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep06",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-017",
+      "title": "服化道设计 EP06",
+      "stage": "art-design",
+      "description": "服化道设计 for ep06",
+      "priority": 17,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep06/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-016"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-017-business.json",
+          "runtime/reviews/EP-017-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep06",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-018",
+      "title": "分镜编写 EP06",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep06",
+      "priority": 18,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep06/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep06/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-017"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-018-business.json",
+          "runtime/reviews/EP-018-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep06",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-019",
+      "title": "导演分析 EP07",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep07",
+      "priority": 19,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-07.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep07/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-019-business.json",
+          "runtime/reviews/EP-019-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep07",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-020",
+      "title": "服化道设计 EP07",
+      "stage": "art-design",
+      "description": "服化道设计 for ep07",
+      "priority": 20,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep07/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-019"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-020-business.json",
+          "runtime/reviews/EP-020-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep07",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-021",
+      "title": "分镜编写 EP07",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep07",
+      "priority": 21,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep07/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep07/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-020"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-021-business.json",
+          "runtime/reviews/EP-021-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep07",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-022",
+      "title": "导演分析 EP08",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep08",
+      "priority": 22,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-08.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep08/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-022-business.json",
+          "runtime/reviews/EP-022-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep08",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-023",
+      "title": "服化道设计 EP08",
+      "stage": "art-design",
+      "description": "服化道设计 for ep08",
+      "priority": 23,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep08/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-022"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-023-business.json",
+          "runtime/reviews/EP-023-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep08",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-024",
+      "title": "分镜编写 EP08",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep08",
+      "priority": 24,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep08/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep08/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-023"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-024-business.json",
+          "runtime/reviews/EP-024-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep08",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-025",
+      "title": "导演分析 EP09",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep09",
+      "priority": 25,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-09.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep09/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-025-business.json",
+          "runtime/reviews/EP-025-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep09",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-026",
+      "title": "服化道设计 EP09",
+      "stage": "art-design",
+      "description": "服化道设计 for ep09",
+      "priority": 26,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep09/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-025"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-026-business.json",
+          "runtime/reviews/EP-026-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep09",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-027",
+      "title": "分镜编写 EP09",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep09",
+      "priority": 27,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep09/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep09/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-026"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-027-business.json",
+          "runtime/reviews/EP-027-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep09",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-028",
+      "title": "导演分析 EP10",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep10",
+      "priority": 28,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-10.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep10/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-028-business.json",
+          "runtime/reviews/EP-028-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep10",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-029",
+      "title": "服化道设计 EP10",
+      "stage": "art-design",
+      "description": "服化道设计 for ep10",
+      "priority": 29,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep10/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-028"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-029-business.json",
+          "runtime/reviews/EP-029-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep10",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-030",
+      "title": "分镜编写 EP10",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep10",
+      "priority": 30,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep10/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep10/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-029"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-030-business.json",
+          "runtime/reviews/EP-030-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep10",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-031",
+      "title": "导演分析 EP11",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep11",
+      "priority": 31,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-11.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep11/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-031-business.json",
+          "runtime/reviews/EP-031-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep11",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-032",
+      "title": "服化道设计 EP11",
+      "stage": "art-design",
+      "description": "服化道设计 for ep11",
+      "priority": 32,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep11/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-031"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-032-business.json",
+          "runtime/reviews/EP-032-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep11",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-033",
+      "title": "分镜编写 EP11",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep11",
+      "priority": 33,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep11/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep11/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-032"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-033-business.json",
+          "runtime/reviews/EP-033-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep11",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-034",
+      "title": "导演分析 EP12",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep12",
+      "priority": 34,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-12.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep12/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-034-business.json",
+          "runtime/reviews/EP-034-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep12",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-035",
+      "title": "服化道设计 EP12",
+      "stage": "art-design",
+      "description": "服化道设计 for ep12",
+      "priority": 35,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep12/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-034"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-035-business.json",
+          "runtime/reviews/EP-035-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep12",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-036",
+      "title": "分镜编写 EP12",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep12",
+      "priority": 36,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep12/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep12/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-035"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-036-business.json",
+          "runtime/reviews/EP-036-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep12",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-037",
+      "title": "导演分析 EP13",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep13",
+      "priority": 37,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-13.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep13/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-037-business.json",
+          "runtime/reviews/EP-037-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep13",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-038",
+      "title": "服化道设计 EP13",
+      "stage": "art-design",
+      "description": "服化道设计 for ep13",
+      "priority": 38,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep13/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-037"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-038-business.json",
+          "runtime/reviews/EP-038-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep13",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-039",
+      "title": "分镜编写 EP13",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep13",
+      "priority": 39,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep13/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep13/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-038"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-039-business.json",
+          "runtime/reviews/EP-039-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep13",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-040",
+      "title": "导演分析 EP14",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep14",
+      "priority": 40,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-14.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep14/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-040-business.json",
+          "runtime/reviews/EP-040-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep14",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-041",
+      "title": "服化道设计 EP14",
+      "stage": "art-design",
+      "description": "服化道设计 for ep14",
+      "priority": 41,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep14/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-040"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-041-business.json",
+          "runtime/reviews/EP-041-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep14",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-042",
+      "title": "分镜编写 EP14",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep14",
+      "priority": 42,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep14/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep14/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-041"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-042-business.json",
+          "runtime/reviews/EP-042-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep14",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-043",
+      "title": "导演分析 EP15",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep15",
+      "priority": 43,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-15.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep15/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-043-business.json",
+          "runtime/reviews/EP-043-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep15",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-044",
+      "title": "服化道设计 EP15",
+      "stage": "art-design",
+      "description": "服化道设计 for ep15",
+      "priority": 44,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep15/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-043"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-044-business.json",
+          "runtime/reviews/EP-044-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep15",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-045",
+      "title": "分镜编写 EP15",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep15",
+      "priority": 45,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep15/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep15/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-044"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-045-business.json",
+          "runtime/reviews/EP-045-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep15",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-046",
+      "title": "导演分析 EP16",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep16",
+      "priority": 46,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-16.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep16/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-046-business.json",
+          "runtime/reviews/EP-046-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep16",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-047",
+      "title": "服化道设计 EP16",
+      "stage": "art-design",
+      "description": "服化道设计 for ep16",
+      "priority": 47,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep16/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-046"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-047-business.json",
+          "runtime/reviews/EP-047-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep16",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-048",
+      "title": "分镜编写 EP16",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep16",
+      "priority": 48,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep16/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep16/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-047"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-048-business.json",
+          "runtime/reviews/EP-048-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep16",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-049",
+      "title": "导演分析 EP17",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep17",
+      "priority": 49,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-17.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep17/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-049-business.json",
+          "runtime/reviews/EP-049-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep17",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-050",
+      "title": "服化道设计 EP17",
+      "stage": "art-design",
+      "description": "服化道设计 for ep17",
+      "priority": 50,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep17/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-049"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-050-business.json",
+          "runtime/reviews/EP-050-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep17",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-051",
+      "title": "分镜编写 EP17",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep17",
+      "priority": 51,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep17/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep17/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-050"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-051-business.json",
+          "runtime/reviews/EP-051-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep17",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-052",
+      "title": "导演分析 EP18",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep18",
+      "priority": 52,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-18.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep18/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-052-business.json",
+          "runtime/reviews/EP-052-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep18",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-053",
+      "title": "服化道设计 EP18",
+      "stage": "art-design",
+      "description": "服化道设计 for ep18",
+      "priority": 53,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep18/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-052"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-053-business.json",
+          "runtime/reviews/EP-053-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep18",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-054",
+      "title": "分镜编写 EP18",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep18",
+      "priority": 54,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep18/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep18/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-053"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-054-business.json",
+          "runtime/reviews/EP-054-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep18",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-055",
+      "title": "导演分析 EP19",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep19",
+      "priority": 55,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-19.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep19/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-055-business.json",
+          "runtime/reviews/EP-055-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep19",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-056",
+      "title": "服化道设计 EP19",
+      "stage": "art-design",
+      "description": "服化道设计 for ep19",
+      "priority": 56,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep19/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-055"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-056-business.json",
+          "runtime/reviews/EP-056-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep19",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-057",
+      "title": "分镜编写 EP19",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep19",
+      "priority": 57,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep19/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep19/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-056"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-057-business.json",
+          "runtime/reviews/EP-057-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep19",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-058",
+      "title": "导演分析 EP20",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep20",
+      "priority": 58,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-20.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep20/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-058-business.json",
+          "runtime/reviews/EP-058-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep20",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-059",
+      "title": "服化道设计 EP20",
+      "stage": "art-design",
+      "description": "服化道设计 for ep20",
+      "priority": 59,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep20/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-058"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-059-business.json",
+          "runtime/reviews/EP-059-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep20",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-060",
+      "title": "分镜编写 EP20",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep20",
+      "priority": 60,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep20/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep20/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-059"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-060-business.json",
+          "runtime/reviews/EP-060-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep20",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-061",
+      "title": "导演分析 EP21",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep21",
+      "priority": 61,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-21.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep21/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-061-business.json",
+          "runtime/reviews/EP-061-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep21",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-062",
+      "title": "服化道设计 EP21",
+      "stage": "art-design",
+      "description": "服化道设计 for ep21",
+      "priority": 62,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep21/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-061"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-062-business.json",
+          "runtime/reviews/EP-062-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep21",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-063",
+      "title": "分镜编写 EP21",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep21",
+      "priority": 63,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep21/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep21/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-062"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-063-business.json",
+          "runtime/reviews/EP-063-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep21",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-064",
+      "title": "导演分析 EP22",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep22",
+      "priority": 64,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-22.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep22/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-064-business.json",
+          "runtime/reviews/EP-064-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep22",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-065",
+      "title": "服化道设计 EP22",
+      "stage": "art-design",
+      "description": "服化道设计 for ep22",
+      "priority": 65,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep22/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-064"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-065-business.json",
+          "runtime/reviews/EP-065-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep22",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-066",
+      "title": "分镜编写 EP22",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep22",
+      "priority": 66,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep22/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep22/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-065"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-066-business.json",
+          "runtime/reviews/EP-066-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep22",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-067",
+      "title": "导演分析 EP23",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep23",
+      "priority": 67,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-23.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep23/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-067-business.json",
+          "runtime/reviews/EP-067-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep23",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-068",
+      "title": "服化道设计 EP23",
+      "stage": "art-design",
+      "description": "服化道设计 for ep23",
+      "priority": 68,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep23/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-067"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-068-business.json",
+          "runtime/reviews/EP-068-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep23",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-069",
+      "title": "分镜编写 EP23",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep23",
+      "priority": 69,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep23/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep23/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-068"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-069-business.json",
+          "runtime/reviews/EP-069-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep23",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-070",
+      "title": "导演分析 EP24",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep24",
+      "priority": 70,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-24.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep24/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-070-business.json",
+          "runtime/reviews/EP-070-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep24",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-071",
+      "title": "服化道设计 EP24",
+      "stage": "art-design",
+      "description": "服化道设计 for ep24",
+      "priority": 71,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep24/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-070"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-071-business.json",
+          "runtime/reviews/EP-071-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep24",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-072",
+      "title": "分镜编写 EP24",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep24",
+      "priority": 72,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep24/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep24/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-071"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-072-business.json",
+          "runtime/reviews/EP-072-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep24",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-073",
+      "title": "导演分析 EP25",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep25",
+      "priority": 73,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-25.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep25/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-073-business.json",
+          "runtime/reviews/EP-073-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep25",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-074",
+      "title": "服化道设计 EP25",
+      "stage": "art-design",
+      "description": "服化道设计 for ep25",
+      "priority": 74,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep25/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-073"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-074-business.json",
+          "runtime/reviews/EP-074-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep25",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-075",
+      "title": "分镜编写 EP25",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep25",
+      "priority": 75,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep25/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep25/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-074"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-075-business.json",
+          "runtime/reviews/EP-075-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep25",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-076",
+      "title": "导演分析 EP26",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep26",
+      "priority": 76,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-26.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep26/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-076-business.json",
+          "runtime/reviews/EP-076-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep26",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-077",
+      "title": "服化道设计 EP26",
+      "stage": "art-design",
+      "description": "服化道设计 for ep26",
+      "priority": 77,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep26/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-076"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-077-business.json",
+          "runtime/reviews/EP-077-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep26",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-078",
+      "title": "分镜编写 EP26",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep26",
+      "priority": 78,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep26/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep26/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-077"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-078-business.json",
+          "runtime/reviews/EP-078-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep26",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-079",
+      "title": "导演分析 EP27",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep27",
+      "priority": 79,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-27.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep27/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-079-business.json",
+          "runtime/reviews/EP-079-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep27",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-080",
+      "title": "服化道设计 EP27",
+      "stage": "art-design",
+      "description": "服化道设计 for ep27",
+      "priority": 80,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep27/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-079"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-080-business.json",
+          "runtime/reviews/EP-080-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep27",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-081",
+      "title": "分镜编写 EP27",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep27",
+      "priority": 81,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep27/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep27/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-080"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-081-business.json",
+          "runtime/reviews/EP-081-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep27",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-082",
+      "title": "导演分析 EP28",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep28",
+      "priority": 82,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-28.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep28/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-082-business.json",
+          "runtime/reviews/EP-082-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep28",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-083",
+      "title": "服化道设计 EP28",
+      "stage": "art-design",
+      "description": "服化道设计 for ep28",
+      "priority": 83,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep28/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-082"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-083-business.json",
+          "runtime/reviews/EP-083-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep28",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-084",
+      "title": "分镜编写 EP28",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep28",
+      "priority": 84,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep28/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep28/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-083"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-084-business.json",
+          "runtime/reviews/EP-084-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep28",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-085",
+      "title": "导演分析 EP29",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep29",
+      "priority": 85,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-29.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep29/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-085-business.json",
+          "runtime/reviews/EP-085-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep29",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-086",
+      "title": "服化道设计 EP29",
+      "stage": "art-design",
+      "description": "服化道设计 for ep29",
+      "priority": 86,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep29/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-085"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-086-business.json",
+          "runtime/reviews/EP-086-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep29",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-087",
+      "title": "分镜编写 EP29",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep29",
+      "priority": 87,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep29/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep29/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-086"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-087-business.json",
+          "runtime/reviews/EP-087-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep29",
+        "artifact_type": "storyboard-prompting"
+      }
+    },
+    {
+      "id": "EP-088",
+      "title": "导演分析 EP30",
+      "stage": "director-analysis",
+      "description": "导演分析 for ep30",
+      "priority": 88,
+      "status": "todo",
+      "inputs": [
+        "script/Episode-30.md",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep30/01-director-analysis.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "01-director-analysis.md exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "director"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-088-business.json",
+          "runtime/reviews/EP-088-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep30",
+        "artifact_type": "director-analysis"
+      }
+    },
+    {
+      "id": "EP-089",
+      "title": "服化道设计 EP30",
+      "stage": "art-design",
+      "description": "服化道设计 for ep30",
+      "priority": 89,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep30/01-director-analysis.md",
+        "config.json"
+      ],
+      "outputs": [
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json"
+      ],
+      "dependencies": [
+        "EP-088"
+      ],
+      "acceptance_criteria": [
+        "character-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "art-designer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-089-business.json",
+          "runtime/reviews/EP-089-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep30",
+        "artifact_type": "art-design"
+      }
+    },
+    {
+      "id": "EP-090",
+      "title": "分镜编写 EP30",
+      "stage": "storyboard-prompting",
+      "description": "分镜编写 for ep30",
+      "priority": 90,
+      "status": "todo",
+      "inputs": [
+        "outputs/ep30/01-director-analysis.md",
+        "assets/character-prompts.json",
+        "assets/scene-prompts.json",
+        "config.json"
+      ],
+      "outputs": [
+        "outputs/ep30/02-seedance-prompts.json"
+      ],
+      "dependencies": [
+        "EP-089"
+      ],
+      "acceptance_criteria": [
+        "02-seedance-prompts.json exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "storyboard-artist"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/EP-090-business.json",
+          "runtime/reviews/EP-090-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode": "ep30",
+        "artifact_type": "storyboard-prompting"
+      }
+    }
+  ]
+}

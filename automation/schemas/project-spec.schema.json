@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Knot Project Spec",
+  "description": "Formal schema for a Knot project specification document.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "project_id",
+    "project_type",
+    "target_medium",
+    "language",
+    "audience",
+    "style",
+    "workflow",
+    "review_policy",
+    "naming"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 160
+    },
+    "project_type": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 120
+    },
+    "target_medium": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 120
+    },
+    "language": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 40
+    },
+    "audience": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 120
+    },
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "voice",
+        "visual_style",
+        "tone"
+      ],
+      "properties": {
+        "voice": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 240
+        },
+        "visual_style": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 240
+        },
+        "tone": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 240
+        }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stages",
+        "artifact_root",
+        "fact_root",
+        "review_root"
+      ],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          },
+          "minItems": 1
+        },
+        "artifact_root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fact_root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review_root": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "review_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_gates",
+        "notes"
+      ],
+      "properties": {
+        "required_gates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "existence",
+              "structure",
+              "business",
+              "compliance",
+              "continuity",
+              "editorial",
+              "brand",
+              "custom"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      }
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "story_prefix",
+        "artifact_convention"
+      ],
+      "properties": {
+        "story_prefix": {
+          "type": "string",
+          "pattern": "^[A-Z]{2,5}$"
+        },
+        "artifact_convention": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 300
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "project": "content-series-demo",
+  "workflow": "content-production",
+  "description": "Example Knot taskboard for a generic content production pipeline.",
+  "stories": [
+    {
+      "id": "ST-001",
+      "title": "Create episode outline",
+      "stage": "outline",
+      "description": "Produce a structured outline for episode 01 using the project spec and source brief.",
+      "priority": 1,
+      "status": "ready",
+      "inputs": [
+        "runtime/project-spec.json",
+        "inputs/episode-01-brief.md"
+      ],
+      "outputs": [
+        "artifacts/episode-01/outline.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "Outline file exists",
+        "Sections follow the project outline template",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "structure-checker",
+          "story-editor",
+          "compliance-reviewer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "reviews/ST-001-structure.json",
+          "reviews/ST-001-business.json",
+          "reviews/ST-001-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode_id": "ep01",
+        "artifact_type": "outline"
+      },
+      "extensions": {}
+    },
+    {
+      "id": "ST-002",
+      "title": "Create scene prompt package",
+      "stage": "prompting",
+      "description": "Generate the first scene prompt package based on the approved outline and reusable fact sources.",
+      "priority": 2,
+      "status": "todo",
+      "inputs": [
+        "runtime/project-spec.json",
+        "artifacts/episode-01/outline.md",
+        "facts/character-library.json",
+        "facts/scene-library.json"
+      ],
+      "outputs": [
+        "artifacts/episode-01/scene-prompts.json"
+      ],
+      "dependencies": [
+        "ST-001"
+      ],
+      "acceptance_criteria": [
+        "JSON is valid",
+        "All prompt objects include required fields",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance",
+          "continuity"
+        ],
+        "reviewers": [
+          "json-validator",
+          "prompt-editor",
+          "continuity-reviewer",
+          "compliance-reviewer"
+        ],
+        "max_revision_rounds": 3,
+        "blocking": true,
+        "review_artifacts": [
+          "reviews/ST-002-structure.json",
+          "reviews/ST-002-business.json",
+          "reviews/ST-002-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "episode_id": "ep01",
+        "artifact_type": "scene-prompt-package"
+      },
+      "extensions": {}
+    }
+  ]
+}

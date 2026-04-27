@@ -1,0 +1,36 @@
+{
+  "project_id": "content-series-demo",
+  "project_type": "episodic-content",
+  "target_medium": "short-form video",
+  "language": "zh-CN",
+  "audience": "general",
+  "style": {
+    "voice": "cinematic and concise",
+    "visual_style": "grounded realism",
+    "tone": "dramatic but controlled"
+  },
+  "workflow": {
+    "stages": [
+      "outline",
+      "asset-design",
+      "prompting",
+      "review"
+    ],
+    "artifact_root": "artifacts/",
+    "fact_root": "facts/",
+    "review_root": "reviews/"
+  },
+  "review_policy": {
+    "required_gates": [
+      "existence",
+      "structure",
+      "business",
+      "compliance"
+    ],
+    "notes": "Customize this policy to match your platform or editorial process."
+  },
+  "naming": {
+    "story_prefix": "ST",
+    "artifact_convention": "stable, stage-based, machine-readable paths"
+  }
+}

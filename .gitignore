@@ -1,0 +1,20 @@
+# Python cache and local test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+
+# Knot runtime outputs
+runtime/reviews/
+runtime/runs/
+runtime/*.log
+runtime/*.tmp
+runtime/*.bak
+runtime/project-spec.generated.json
+
+# Optional local-only runtime inputs
+runtime/project-spec.local.json
+runtime/taskboard.local.json

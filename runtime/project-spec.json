@@ -1,0 +1,52 @@
+{
+  "project_id": "ai-shot-team-seedance",
+  "project_type": "episodic-content",
+  "target_medium": "short-drama",
+  "language": "zh-CN",
+  "audience": "short-drama viewers, Chinese-speaking",
+  "style": {
+    "voice": "cinematic narrative with director-led scene breakdowns",
+    "visual_style": "真人写实 (live-action realism)",
+    "tone": "dramatic episodic storytelling optimized for 60-second short-form"
+  },
+  "workflow": {
+    "stages": [
+      "director-analysis",
+      "art-design",
+      "storyboard-prompting"
+    ],
+    "artifact_root": "outputs/",
+    "fact_root": "assets/",
+    "review_root": "runtime/reviews/"
+  },
+  "review_policy": {
+    "required_gates": [
+      "existence",
+      "structure",
+      "business",
+      "compliance"
+    ],
+    "notes": "All review nodes execute a two-step process: business review (narrative structure, direction quality, visual consistency, Seedance 2.0 spec compliance) followed by compliance review (platform content policy: no real-person restrictions, no copyrighted IP, no political sensitivity, no extreme violence). Both gates must PASS to advance; on FAIL, all feedback is merged, the agent revises once, and the director re-reviews."
+  },
+  "naming": {
+    "story_prefix": "EP",
+    "artifact_convention": "Episode outputs: outputs/ep{NN}/{seq}-{stage}.{ext}; shared facts: assets/{type}-prompts.json; reviews: runtime/reviews/{story}-{gate}.json"
+  },
+  "metadata": {
+    "episode_count": 30,
+    "episode_target_duration_seconds": 60,
+    "episode_duration_tolerance_seconds": 4,
+    "completed_episodes": [
+      "ep01",
+      "ep02",
+      "ep03"
+    ],
+    "platform": "Seedance 2.0"
+  },
+  "extensions": {
+    "knot": {
+      "resumable_agents": true,
+      "agent_state_file": ".agent-state.json"
+    }
+  }
+}
