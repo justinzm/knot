@@ -1,5 +1,7 @@
 # Knot
 
+[English](README.md) | **简体中文**
+
 `Knot` 是一个面向内容生产工作流的自治循环框架。
 
 它适合这类项目：任务必须拆小、每轮上下文有限、产物需要明确审核门禁，而且流程会持续很多轮。
@@ -66,11 +68,11 @@
 
 推荐入口：
 
-- 详细操作手册：[OPERATION_MANUAL.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/docs/OPERATION_MANUAL.md:1)
-- Schema 说明：[SCHEMAS.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/docs/SCHEMAS.md:1)
-- 发布说明：[RELEASING.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/RELEASING.md:1)
-- 更新日志：[CHANGELOG.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/CHANGELOG.md:1)
-- English overview: [README.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/README.md:1)
+- 详细操作手册：[docs/OPERATION_MANUAL.md](docs/OPERATION_MANUAL.md)
+- Schema 说明：[docs/SCHEMAS.md](docs/SCHEMAS.md)
+- 发布说明：[RELEASING.md](RELEASING.md)
+- 更新日志：[CHANGELOG.md](CHANGELOG.md)
+- English overview: [README.md](README.md)
 
 ## 快速命令
 
@@ -137,7 +139,7 @@ python skills/knot-init/init_project.py --knot-dir knot --clean --tool claude
 
 集数命名支持 `Episode-01.md`、`ep01-xxx.md`、`第1集-xxx.md`、`EP01.md` 等多种格式。每集默认展开成 3 个有依赖的 story：`DIR`（导演分析）→ `ART`（服化道设计）→ `SB`（分镜提示词）。集与集之间无依赖，可并行处理。
 
-完整 skill 文档见 [skills/knot-init/SKILL.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/skills/knot-init/SKILL.md:1) 与 [skills/knot-init/README.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/skills/knot-init/README.md:1)。
+完整 skill 文档见 [skills/knot-init/SKILL.md](skills/knot-init/SKILL.md) 与 [skills/knot-init/README.md](skills/knot-init/README.md)。
 
 ## 最小输入集
 

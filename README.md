@@ -1,5 +1,7 @@
 # Knot
 
+**English** | [简体中文](README.zh-CN.md)
+
 Knot is an autonomous loop for content production workflows.
 
 It is built for projects where work needs to be split into small, reviewable units, carried across many iterations, and approved through explicit gates instead of vague "looks done" judgment.
@@ -68,11 +70,11 @@ It is a weaker fit for fully open-ended ideation with no review boundary.
 
 Useful entrypoints:
 
-- Operator guide: [OPERATION_MANUAL.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/docs/OPERATION_MANUAL.md:1)
-- Schema reference: [SCHEMAS.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/docs/SCHEMAS.md:1)
-- Release guide: [RELEASING.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/RELEASING.md:1)
-- Changelog: [CHANGELOG.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/CHANGELOG.md:1)
-- 中文概览： [README.zh-CN.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/README.zh-CN.md:1)
+- Operator guide: [docs/OPERATION_MANUAL.md](docs/OPERATION_MANUAL.md)
+- Schema reference: [docs/SCHEMAS.md](docs/SCHEMAS.md)
+- Release guide: [RELEASING.md](RELEASING.md)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
+- 中文概览：[README.zh-CN.md](README.zh-CN.md)
 
 ## Quick Commands
 
@@ -139,7 +141,7 @@ Common flags:
 
 Episode detection supports `Episode-01.md`, `ep01-xxx.md`, `第1集-xxx.md`, and `EP01.md`. Each episode expands into 3 dependent stories by default: `DIR` (director analysis) → `ART` (art/costume design) → `SB` (storyboard prompts). Episodes themselves are independent and can be processed in parallel.
 
-For full skill documentation see [skills/knot-init/SKILL.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/skills/knot-init/SKILL.md:1) and [skills/knot-init/README.md](/d:/dev/aigcFile/ai_shot_team_seedance/knot/skills/knot-init/README.md:1).
+For full skill documentation see [skills/knot-init/SKILL.md](skills/knot-init/SKILL.md) and [skills/knot-init/README.md](skills/knot-init/README.md).
 
 ## Core Inputs
 
