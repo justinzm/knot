@@ -461,6 +461,21 @@ def run_preflight(knot_dir: Path, dry_run: bool) -> bool:
     return result.returncode == 0
 
 
+def ensure_runner_executable(knot_dir: Path, dry_run: bool) -> None:
+    """Ensure the copied Knot runner can be invoked as ./core/knot.sh."""
+    runner_path = knot_dir / "core" / "knot.sh"
+    if not runner_path.exists():
+        print(f"WARNING: Knot runner not found at {runner_path}")
+        return
+
+    if dry_run:
+        print(f"[DRY-RUN] Would chmod +x: {runner_path}")
+        return
+
+    runner_path.chmod(0o755)
+    print(f"Ensured executable: {runner_path}")
+
+
 def slugify(value: str) -> str:
     """Convert string to kebab-case slug."""
     pieces: list[str] = []
@@ -495,6 +510,9 @@ def main() -> int:
     # Ensure runtime directory exists
     if not dry_run_check(args.dry_run, f"Create directory: {runtime_dir}"):
         runtime_dir.mkdir(parents=True, exist_ok=True)
+
+    ensure_runner_executable(knot_dir, args.dry_run)
+    print()
 
     # 1. Clean existing runtime (optional)
     if args.clean:
