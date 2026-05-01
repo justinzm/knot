@@ -1,0 +1,38 @@
+{
+  "project_id": "knot-generic-demo",
+  "project_type": "content-production-demo",
+  "target_medium": "short-form written content",
+  "language": "en",
+  "audience": "content operations teams",
+  "style": {
+    "voice": "clear and practical",
+    "visual_style": "text-first, structured, easy to review",
+    "tone": "neutral professional"
+  },
+  "workflow": {
+    "stages": [
+      "outline",
+      "draft"
+    ],
+    "artifact_root": "artifacts/",
+    "fact_root": "runtime/",
+    "review_root": "runtime/reviews/"
+  },
+  "review_policy": {
+    "required_gates": [
+      "existence",
+      "structure",
+      "business",
+      "compliance"
+    ],
+    "notes": "The default demo uses lightweight content gates so a new user can understand produce, validate, review, revise, approve, and persist without adopting a platform-specific workflow."
+  },
+  "naming": {
+    "story_prefix": "ST",
+    "artifact_convention": "Demo artifacts live under artifacts/demo/ and use stable stage-based filenames."
+  },
+  "metadata": {
+    "demo": true
+  },
+  "extensions": {}
+}

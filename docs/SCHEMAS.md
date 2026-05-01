@@ -1,6 +1,8 @@
 # Knot Schemas
 
-Knot now ships with formal JSON Schemas in [automation/schemas](/d:/dev/aigcFile/ai_shot_team_seedance/knot/automation/schemas:1):
+Knot ships with formal JSON Schemas in [automation/schemas](../automation/schemas):
+
+Commands in this document assume the current directory is the `knot/` framework directory. From the release package root, prefix paths with `knot/`.
 
 - `taskboard.schema.json`
 - `project-spec.schema.json`
@@ -8,11 +10,7 @@ Knot now ships with formal JSON Schemas in [automation/schemas](/d:/dev/aigcFile
 - `review-result.schema.json`
 - `preflight-report.schema.json`
 
-These schemas follow the `C` direction we discussed:
-
-- strict core fields
-- explicit enums for status and gates
-- open extension points through `metadata` and `extensions`
+The schemas use strict core fields, explicit enums for status and gates, and open extension points through `metadata` and `extensions`.
 
 ## Taskboard Schema
 
@@ -103,9 +101,12 @@ Recommended use:
 
 ## Example Files
 
-- Story examples live in [taskboard.json.example](/d:/dev/aigcFile/ai_shot_team_seedance/knot/examples/taskboard.json.example:1)
-- Review result example lives in [review-result.example.json](/d:/dev/aigcFile/ai_shot_team_seedance/knot/examples/review-result.example.json:1)
-- Preflight report example lives in [preflight-report.example.json](/d:/dev/aigcFile/ai_shot_team_seedance/knot/examples/preflight-report.example.json:1)
+- Default runnable demo: `runtime/`
+- Empty starter examples: `examples/starter-empty/`
+- Domain templates: `examples/templates/`
+- Legacy compact examples: `examples/*.example.json`
+
+The default `runtime/` is a runnable generic demo, not a project template source of truth. Use `examples/starter-empty/` as the copyable starting point for a new project.
 
 ## Practical Guidance
 
@@ -119,26 +120,25 @@ Recommended use:
 Knot includes a simple CLI validator:
 
 ```bash
-python knot/automation/scripts/validate_schema.py --schema knot/automation/schemas/taskboard.schema.json --input knot/runtime/taskboard.json
-python knot/automation/scripts/validate_schema.py --schema knot/automation/schemas/project-spec.schema.json --input knot/examples/project-spec.example.json
-python knot/automation/scripts/validate_schema.py --schema knot/automation/schemas/review-result.schema.json --input knot/examples/review-result.example.json
-python knot/automation/scripts/validate_schema.py --schema knot/automation/schemas/preflight-report.schema.json --input knot/examples/preflight-report.example.json
-python knot/automation/scripts/generate_project_spec.py --knot-dir knot --tool claude --force
+python3 automation/scripts/validate_schema.py --schema automation/schemas/taskboard.schema.json --input runtime/taskboard.json
+python3 automation/scripts/validate_schema.py --schema automation/schemas/project-spec.schema.json --input runtime/project-spec.json
+python3 automation/scripts/validate_schema.py --schema automation/schemas/review-result.schema.json --input examples/review-result.example.json
+python3 automation/scripts/validate_schema.py --schema automation/schemas/preflight-report.schema.json --input examples/preflight-report.example.json
 ```
-
-Exit code behavior:
-
-- `0` = valid
-- `1` = schema validation failed
-- `2` = file, parsing, or runtime error
 
 For a persisted preflight report, use:
 
 ```bash
-python knot/automation/scripts/run_preflight.py --knot-dir knot
+python3 automation/scripts/run_preflight.py --knot-dir .
 ```
 
 That command writes:
 
 - `runtime/reviews/preflight/latest.json`
 - a `PRECHECK` entry in `runtime/progress.txt`
+
+Exit code behavior:
+
+- `0` = valid
+- `1` = schema validation failed
+- `2` = file, parsing, or runtime error

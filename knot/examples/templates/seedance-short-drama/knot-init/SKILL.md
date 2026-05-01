@@ -1,13 +1,15 @@
 ---
-name: knot-init
-description: Knot 项目初始化 Skill。扫描项目结构，自动生成运行时所需的全部配置文件，支持清理旧项目状态。
+name: seedance-short-drama-init
+description: Seedance short-drama template initializer for Knot. Scans episode scripts and creates a Seedance-specific runtime taskboard, brief, progress log, and project spec.
 ---
 
-# Knot Init Skill
+# Seedance Short-Drama Init Skill
+
+This template helper initializes a Knot runtime for Seedance short-drama production. It is intentionally template-specific and is not part of the generic Knot core.
 
 ## 功能
 
-自动完成 Knot 项目的初始化工作：
+自动完成 Seedance 短剧 Knot 项目的初始化工作：
 
 1. **清理旧状态**（可选）— 删除上一轮项目的运行时文件
 2. **扫描项目结构** — 读取 `config.json`、`script/` 目录、已有产物
@@ -22,14 +24,14 @@ description: Knot 项目初始化 Skill。扫描项目结构，自动生成运�
 ### 基本用法
 
 ```bash
-python skills/knot-init/init_project.py --knot-dir knot
+python examples/templates/seedance-short-drama/knot-init/init_project.py --knot-dir knot
 ```
 
 ### 完整流程（推荐）
 
 ```bash
 # 1. 清理旧运行时并重新初始化
-python skills/knot-init/init_project.py \
+python examples/templates/seedance-short-drama/knot-init/init_project.py \
   --knot-dir knot \
   --clean \
   --tool claude
@@ -53,7 +55,7 @@ python skills/knot-init/init_project.py \
 ### 演示模式
 
 ```bash
-python skills/knot-init/init_project.py \
+python examples/templates/seedance-short-drama/knot-init/init_project.py \
   --knot-dir knot \
   --clean \
   --dry-run
@@ -110,7 +112,7 @@ STAGE_DEFINITIONS = [
 
 ## 与 Producer Pipeline 的区别
 
-| | Producer Pipeline (根工作流) | Knot Init + Knot Loop |
+| | Producer Pipeline (根工作流) | Seedance Short-Drama Init + Knot Loop |
 |---|---|---|
 | 触发方式 | 人工指令 `~start` / `~design` / `~prompt` | 全自动循环 |
 | 初始化 | 手动准备各阶段输入 | `init_project.py` 一键生成 |

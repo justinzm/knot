@@ -1,0 +1,105 @@
+{
+  "project": "knot-generic-demo",
+  "workflow": "content-production-demo",
+  "description": "A tiny generic Knot demo with two dependent content stories.",
+  "stories": [
+    {
+      "id": "ST-001",
+      "title": "Create review-gates outline",
+      "stage": "outline",
+      "description": "Produce a concise outline for a short educational post about explicit review gates in content workflows.",
+      "priority": 1,
+      "status": "ready",
+      "inputs": [
+        "runtime/project-brief.md",
+        "runtime/project-spec.json"
+      ],
+      "outputs": [
+        "artifacts/demo/outline.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "Outline file exists and is non-empty",
+        "Outline contains the headings Title, Audience, Key Points, and Review Notes",
+        "Business review confirms the outline explains why explicit gates improve workflow quality",
+        "Compliance review confirms the outline avoids sensitive claims and private data"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "content-editor",
+          "compliance-reviewer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/ST-001-business.json",
+          "runtime/reviews/ST-001-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "artifact_type": "outline",
+        "demo": true
+      },
+      "extensions": {}
+    },
+    {
+      "id": "ST-002",
+      "title": "Draft review-gates post",
+      "stage": "draft",
+      "description": "Write a short educational post from the approved outline.",
+      "priority": 2,
+      "status": "todo",
+      "inputs": [
+        "artifacts/demo/outline.md",
+        "runtime/project-spec.json"
+      ],
+      "outputs": [
+        "artifacts/demo/post-draft.md"
+      ],
+      "dependencies": [
+        "ST-001"
+      ],
+      "acceptance_criteria": [
+        "Draft file exists and is non-empty",
+        "Draft contains the headings Title, Draft, and Review Notes",
+        "Business review confirms the draft is clear and useful for content operations teams",
+        "Compliance review confirms the draft avoids sensitive claims and private data"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "content-editor",
+          "compliance-reviewer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/ST-002-business.json",
+          "runtime/reviews/ST-002-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {
+        "artifact_type": "draft",
+        "demo": true
+      },
+      "extensions": {}
+    }
+  ],
+  "metadata": {
+    "demo": true
+  },
+  "extensions": {}
+}

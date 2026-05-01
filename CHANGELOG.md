@@ -8,19 +8,23 @@ This project follows a simple keep-a-changelog style adapted for workflow and sc
 
 ### Added
 
-- Placeholder for new features, documents, schemas, scripts, or examples.
+- Added `skills/knot-runtime/` as the packaged source location for the optional Knot runtime-preparation skill.
+- Added install instructions for copying the runtime skill into `.agents/skills/` or `.claude/skills/`.
+- Added `requirements.txt` for the Python validation dependency.
 
 ### Changed
 
-- Placeholder for behavior changes, path changes, workflow changes, or onboarding updates.
+- Moved the framework files under a top-level `knot/` directory so the repository root can serve as a release package containing both `knot/` and `skills/`.
+- Clarified the recommended host-project layout where Knot is vendored as `./knot`.
+- Updated release validation commands to run correctly from the repository root.
 
 ### Fixed
 
-- Placeholder for bug fixes, validation fixes, or documentation corrections.
+- Fixed documentation ambiguity around skill source location versus active agent skill installation location.
 
 ### Removed
 
-- Placeholder for deleted skills, deprecated files, or obsolete workflow paths.
+- Removed the duplicate `automation/skills/knot` skill entry.
 
 ## 2026-04-24
 

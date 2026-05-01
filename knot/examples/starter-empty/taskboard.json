@@ -1,0 +1,51 @@
+{
+  "project": "replace-with-project-id",
+  "workflow": "content-production",
+  "description": "Replace this with a short description of the content workflow.",
+  "stories": [
+    {
+      "id": "ST-001",
+      "title": "Replace with first story title",
+      "stage": "replace-with-stage",
+      "description": "Replace this with a clear description of the first reviewable content unit.",
+      "priority": 1,
+      "status": "ready",
+      "inputs": [
+        "runtime/project-brief.md",
+        "runtime/project-spec.json"
+      ],
+      "outputs": [
+        "artifacts/replace-with-output.md"
+      ],
+      "dependencies": [],
+      "acceptance_criteria": [
+        "Expected artifact exists and is non-empty",
+        "Structure validation passes",
+        "Business review passes",
+        "Compliance review passes"
+      ],
+      "review_policy": {
+        "required_gates": [
+          "existence",
+          "structure",
+          "business",
+          "compliance"
+        ],
+        "reviewers": [
+          "content-reviewer"
+        ],
+        "max_revision_rounds": 2,
+        "blocking": true,
+        "review_artifacts": [
+          "runtime/reviews/ST-001-business.json",
+          "runtime/reviews/ST-001-compliance.json"
+        ]
+      },
+      "notes": "",
+      "metadata": {},
+      "extensions": {}
+    }
+  ],
+  "metadata": {},
+  "extensions": {}
+}

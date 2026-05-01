@@ -1,6 +1,8 @@
-# Knot Init Skill
+# Seedance Short-Drama Init Skill
 
-一键初始化 Knot 内容生产项目的运行时配置。
+> This initializer belongs to the Seedance short-drama template. The generic Knot framework does not assume episode scripts, Seedance prompts, or short-drama production stages.
+
+一键初始化 Seedance 短剧 Knot 内容生产项目的运行时配置。
 
 ## 快速开始
 
@@ -8,7 +10,7 @@
 # 进入项目根目录，确保 knot/ 已复制到此
 
 # 一键初始化（清理旧状态 + 生成新配置）
-python skills/knot-init/init_project.py --knot-dir knot --clean
+python examples/templates/seedance-short-drama/knot-init/init_project.py --knot-dir knot --clean
 
 # 启动 Knot 循环
 ./knot/core/knot.sh --tool claude

@@ -6,6 +6,10 @@
 
 它适合这类项目：任务必须拆小、每轮上下文有限、产物需要明确审核门禁，而且流程会持续很多轮。
 
+默认闭环是：
+
+`produce -> validate -> review -> revise -> approve -> persist`
+
 ## 它保留了什么
 
 - 一次迭代只处理 1 个 story
@@ -31,10 +35,6 @@
 - 合规审核通过
 - 状态已经持久化
 
-默认闭环是：
-
-`produce -> validate -> review -> revise -> approve -> persist`
-
 ## 适用场景
 
 - 剧本、提纲、分镜、提示词流水线
@@ -46,25 +46,60 @@
 
 ## 目录结构
 
-- `core/`
+- `knot/`
+  要复制到宿主内容项目里的 Knot 框架目录。
+- `knot/core/`
   运行入口，例如 `knot.sh` 和单轮执行 prompt。
-- `automation/`
-  Schema、校验脚本、测试和可选 skill。
-- `runtime/`
-  当前项目正在使用的任务板、进度日志和审核结果。
-- `examples/`
-  新项目可复制的样板文件。
+- `knot/automation/`
+  Schema、校验脚本和测试。
+- `knot/runtime/`
+  默认只保留一个极小通用 demo，用来展示 story、依赖、产物和审核门禁，不代表任何特定业务流水线。
+- `knot/examples/starter-empty/`
+  新 runtime 可复制的空白起点。
+- `knot/examples/templates/`
+  可选领域模板，例如 `seedance-short-drama`。
+- `skills/knot-runtime/`
+  可选 Agent skill 源码，用于复制到 `.agents/skills/` 或 `.claude/skills/`。
 - `docs/`
   详细操作手册和 Schema 说明。
-- `skills/`
-  可选辅助 skill，例如 `knot-init`，用于一键初始化项目运行时。
+
+## 在内容项目中使用 Knot
+
+推荐目录结构：
+
+```text
+my-content-project/
+├── .agents/ 或 .claude/       # 可选，Agent skill 的实际安装位置
+├── knot/                      # 从本仓库的 knot/ 目录复制而来
+├── config.json                # 宿主项目配置，可选
+├── script/                    # 源材料
+├── assets/                    # 共享事实、引用资料或素材元信息
+└── outputs/                   # 生成的内容产物
+```
+
+通常应该把 Knot 作为宿主项目里的 `./knot` 子目录。把本仓库的 `knot/` 目录复制到宿主项目作为 `./knot`。宿主项目负责源材料和输出产物；`knot/runtime/` 负责当前任务板、项目规格和进度记忆。
+
+如果要让 Agent 使用随仓库发布的 runtime 初始化 skill，需要复制到 Agent 会加载的位置：
+
+```bash
+mkdir -p .agents/skills
+cp -R /path/to/knot-package/skills/knot-runtime .agents/skills/knot-runtime
+```
+
+Claude Code 项目可以复制到：
+
+```bash
+mkdir -p .claude/skills
+cp -R /path/to/knot-package/skills/knot-runtime .claude/skills/knot-runtime
+```
 
 ## 从哪里开始
 
-1. 准备真实的 `runtime/taskboard.json`
-2. 在 `runtime/project-brief.md` 里写需求，或运行时通过 `--brief` 传入
-3. 运行预检，或让 `knot.sh` 自动生成 `runtime/project-spec.json`
-4. 启动 `core/knot.sh`
+1. 先对 `knot/runtime/` 中的默认通用 demo 运行 preflight。
+2. 查看 `knot/runtime/taskboard.json`，理解 story、依赖、产物和 gate 如何建模。
+3. 新项目可以复制 `knot/examples/starter-empty/` 到 `knot/runtime/`，然后填写 brief、spec 和 taskboard。
+4. 如果想看领域模板，可以查看 `knot/examples/templates/seedance-short-drama/`。
+5. 当 `knot/runtime/` 文件已经代表你要运行的真实项目后，再启动 `knot/core/knot.sh`。
 
 推荐入口：
 
@@ -76,79 +111,73 @@
 
 ## 快速命令
 
-```bash
-python knot/automation/scripts/generate_project_spec.py --knot-dir knot --tool claude --force
-```
+安装 Python 依赖：
 
 ```bash
-python knot/automation/scripts/validate_schema.py \
+python3 -m pip install -r requirements.txt
+```
+
+从本仓库根目录运行：
+
+```bash
+python3 knot/automation/scripts/validate_schema.py \
   --schema knot/automation/schemas/taskboard.schema.json \
   --input knot/runtime/taskboard.json
 ```
 
 ```bash
-python knot/automation/scripts/run_preflight.py --knot-dir knot
+python3 knot/automation/scripts/run_preflight.py --knot-dir knot
 ```
 
 ```bash
 ./knot/core/knot.sh
 ```
 
-```bash
-./knot/core/knot.sh --brief "把这个项目做成一个中文短剧 Seedance 提示词流水线"
-```
-
-## Skills（可选辅助）
-
-`skills/` 目录用来存放可选的辅助 skill。它们不是 Knot 必需的运行组件，但能显著简化常见的初始化和维护流程。
-
-### knot-init —— 一键初始化项目
-
-`skills/knot-init/init_project.py` 会自动扫描宿主项目（`config.json`、`script/`、已有产物），并生成完整的 runtime 配置，让你从空仓库到可运行的 Knot 循环只需要一条命令。
-
-它会生成：
-
-| 文件 | 来源 |
-|------|------|
-| `runtime/project-brief.md` | 基于 `config.json` 和 `script/` 扫描自动生成 |
-| `runtime/taskboard.json` | 基于检测到的集数和阶段规则自动生成 |
-| `runtime/progress.txt` | 从固定模板初始化 |
-| `runtime/project-spec.json` | 自动调用官方的 `automation/scripts/generate_project_spec.py` 生成 |
-
-推荐工作流：
+如果当前目录是 `knot/` 框架目录内部，则去掉第一层 `knot/` 前缀：
 
 ```bash
-# 1. 清理旧运行时并重新生成全部配置
-python skills/knot-init/init_project.py --knot-dir knot --clean --tool claude
+cd knot
 
-# 2. 预检通过后启动 Knot 循环
-./knot/core/knot.sh --tool claude
+python3 automation/scripts/validate_schema.py \
+  --schema automation/schemas/taskboard.schema.json \
+  --input runtime/taskboard.json
+
+python3 automation/scripts/run_preflight.py --knot-dir .
 ```
 
-常用参数：
+## 模板
 
-| 参数 | 说明 |
-|------|------|
-| `--knot-dir` | **必填**。Knot 目录路径 |
-| `--project-root` | 项目根目录。默认是 `--knot-dir` 的父目录 |
-| `--clean` | 清理旧 runtime 文件（`taskboard.json`、`progress.txt` 等）。`outputs/` 和 `assets/` 中的产物不会被删除 |
-| `--skip-spec` | 跳过 `project-spec.json` 生成 |
-| `--tool` | AI CLI 工具（`claude` 或 `amp`）。默认 `claude` |
-| `--dry-run` | 演示模式，不实际写入文件 |
-| `--max-episodes` | 最大集数限制。默认 50 |
+模板是示例，不是 Knot 核心默认行为。
 
-集数命名支持 `Episode-01.md`、`ep01-xxx.md`、`第1集-xxx.md`、`EP01.md` 等多种格式。每集默认展开成 3 个有依赖的 story：`DIR`（导演分析）→ `ART`（服化道设计）→ `SB`（分镜提示词）。集与集之间无依赖，可并行处理。
+- `knot/examples/starter-empty/`：合法的空白起点，用于新内容工作流。
+- `knot/examples/templates/seedance-short-drama/`：Seedance 短剧模板示例，不是 Knot 核心默认行为。它包含 30 集短剧工作流，用于生成导演分析、人物/场景提示词事实库和 Seedance 2.0 分镜提示词。
 
-完整 skill 文档见 [skills/knot-init/SKILL.md](skills/knot-init/SKILL.md) 与 [skills/knot-init/README.md](skills/knot-init/README.md)。
+Seedance 模板包含 `knot/examples/templates/seedance-short-drama/knot-init/`，这是模板专用初始化器。通用 Knot 框架不假设剧集脚本、短剧阶段或 Seedance 提示词。
+
+## Agent Skill
+
+通用 runtime 初始化 skill 以源码形式放在 `skills/knot-runtime/`。这个目录随 Knot 发布，方便用户复制，但它本身通常不会被 Agent 自动加载。
+
+需要让 Agent 准备或刷新 `knot/runtime/` 时，把它安装到宿主项目中：
+
+- Codex 风格 Agent：`.agents/skills/knot-runtime/`
+- Claude Code：`.claude/skills/knot-runtime/`
+
+这个 skill 只应该生成或更新：
+
+- `knot/runtime/project-brief.md`
+- `knot/runtime/project-spec.json`
+- `knot/runtime/taskboard.json`
+- `knot/runtime/progress.txt`
 
 ## 最小输入集
 
-`Knot` 不依赖 `prd`。
+`Knot` 不依赖 PRD。
 
 最小运行输入只有这 3 个：
 
-- `runtime/project-spec.json`
-- `runtime/taskboard.json`
-- `runtime/progress.txt`
+- `knot/runtime/project-spec.json`
+- `knot/runtime/taskboard.json`
+- `knot/runtime/progress.txt`
 
-其中 `runtime/project-spec.json` 现在可以通过 AI 自动生成：输入来自 `runtime/project-brief.md` 和项目扫描结果。
+`knot/runtime/project-spec.json` 可以通过 AI 从 `knot/runtime/project-brief.md` 和项目扫描结果生成，也可以手写并按 schema 校验。

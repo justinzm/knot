@@ -8,13 +8,15 @@ __pycache__/
 Thumbs.db
 
 # Knot runtime outputs
-runtime/reviews/
-runtime/runs/
-runtime/*.log
-runtime/*.tmp
-runtime/*.bak
-runtime/project-spec.generated.json
+knot/runtime/reviews/
+knot/runtime/runs/
+knot/runtime/*.log
+knot/runtime/*.tmp
+knot/runtime/*.bak
+knot/runtime/project-spec.generated.json
+artifacts/
+docs/superpowers/
 
 # Optional local-only runtime inputs
-runtime/project-spec.local.json
-runtime/taskboard.local.json
+knot/runtime/project-spec.local.json
+knot/runtime/taskboard.local.json

@@ -2,9 +2,13 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-Knot is an autonomous loop for content production workflows.
+Knot is an autonomous loop framework for content production workflows.
 
 It is built for projects where work needs to be split into small, reviewable units, carried across many iterations, and approved through explicit gates instead of vague "looks done" judgment.
+
+The default loop is:
+
+`produce -> validate -> review -> revise -> approve -> persist`
 
 ## What Knot Keeps
 
@@ -29,10 +33,6 @@ Knot assumes:
 - quality gate = validation + review + compliance
 - done = artifact written, approved, and state persisted
 
-The default loop is:
-
-`produce -> validate -> review -> revise -> approve -> persist`
-
 ## Good Fit
 
 Knot works well for:
@@ -48,25 +48,60 @@ It is a weaker fit for fully open-ended ideation with no review boundary.
 
 ## Project Layout
 
-- `core/`
+- `knot/`
+  The Knot framework directory to copy into a host content project.
+- `knot/core/`
   Runtime entrypoints such as `knot.sh` and the iteration prompt.
-- `automation/`
-  Schemas, validation scripts, tests, and optional helper skills.
-- `runtime/`
-  Active taskboard, progress log, and generated review reports.
-- `examples/`
-  Starter JSON files for new projects.
+- `knot/automation/`
+  Schemas, validation scripts, and tests.
+- `knot/runtime/`
+  Minimal generic demo runtime that can pass preflight and show the loop shape without binding Knot to a specific production domain.
+- `knot/examples/starter-empty/`
+  Copyable starter files for a new Knot runtime.
+- `knot/examples/templates/`
+  Optional domain templates such as `seedance-short-drama`.
+- `skills/knot-runtime/`
+  Optional agent skill source to copy into `.agents/skills/` or `.claude/skills/`.
 - `docs/`
   Operator guide and schema reference.
-- `skills/`
-  Optional helper skills such as `knot-init` for one-command project bootstrap.
+
+## Use Knot In A Content Project
+
+Recommended layout:
+
+```text
+my-content-project/
+├── .agents/ or .claude/       # optional, where agent skills are installed
+├── knot/                      # copied from this repository's knot/ directory
+├── config.json                # host project configuration, optional
+├── script/                    # source material
+├── assets/                    # shared facts, references, or media metadata
+└── outputs/                   # generated content artifacts
+```
+
+Knot should usually live as `./knot` inside the host project. Copy this repository's `knot/` directory to the host project as `./knot`. The host project owns the source material and generated outputs; `knot/runtime/` owns the current taskboard, project spec, and progress memory.
+
+To make the included runtime-preparation skill available to an agent, copy it into the agent's skill search path:
+
+```bash
+mkdir -p .agents/skills
+cp -R /path/to/knot-package/skills/knot-runtime .agents/skills/knot-runtime
+```
+
+For Claude Code projects:
+
+```bash
+mkdir -p .claude/skills
+cp -R /path/to/knot-package/skills/knot-runtime .claude/skills/knot-runtime
+```
 
 ## Start Here
 
-1. Prepare your real `runtime/taskboard.json`.
-2. Write your requirements in `runtime/project-brief.md` or pass `--brief`.
-3. Run preflight or let `knot.sh` generate the project spec automatically.
-4. Start `core/knot.sh`.
+1. Run preflight against the generic demo runtime in `knot/runtime/`.
+2. Inspect `knot/runtime/taskboard.json` to see how stories, dependencies, outputs, and gates are modeled.
+3. For a new project, copy `knot/examples/starter-empty/` into `knot/runtime/` and fill in the brief, spec, and taskboard.
+4. For a domain-specific example, inspect `knot/examples/templates/seedance-short-drama/`.
+5. Start `knot/core/knot.sh` when the runtime files represent the project you want to run.
 
 Useful entrypoints:
 
@@ -74,74 +109,68 @@ Useful entrypoints:
 - Schema reference: [docs/SCHEMAS.md](docs/SCHEMAS.md)
 - Release guide: [RELEASING.md](RELEASING.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
-- 中文概览：[README.zh-CN.md](README.zh-CN.md)
+- 中文概览: [README.zh-CN.md](README.zh-CN.md)
 
 ## Quick Commands
 
-```bash
-python knot/automation/scripts/generate_project_spec.py --knot-dir knot --tool claude --force
-```
+Install the Python dependency:
 
 ```bash
-python knot/automation/scripts/validate_schema.py \
+python3 -m pip install -r requirements.txt
+```
+
+From this repository root:
+
+```bash
+python3 knot/automation/scripts/validate_schema.py \
   --schema knot/automation/schemas/taskboard.schema.json \
   --input knot/runtime/taskboard.json
 ```
 
 ```bash
-python knot/automation/scripts/run_preflight.py --knot-dir knot
+python3 knot/automation/scripts/run_preflight.py --knot-dir knot
 ```
 
 ```bash
 ./knot/core/knot.sh
 ```
 
-```bash
-./knot/core/knot.sh --brief "Turn this project into a short-drama Seedance prompt pipeline"
-```
-
-## Skills
-
-Optional helper skills live under `skills/`. They are not required to run Knot, but they shorten common bootstrap and maintenance workflows.
-
-### knot-init — one-command project bootstrap
-
-`skills/knot-init/init_project.py` scans the host project (`config.json`, `script/`, existing artifacts) and generates the full runtime set so you can move from empty repository to a runnable Knot loop in a single step.
-
-It produces:
-
-| File | Source |
-|------|--------|
-| `runtime/project-brief.md` | Auto-generated from `config.json` and the `script/` directory |
-| `runtime/taskboard.json` | Auto-generated from detected episodes and stage rules |
-| `runtime/progress.txt` | Initialized from a fixed template |
-| `runtime/project-spec.json` | Generated by calling the official `automation/scripts/generate_project_spec.py` |
-
-Recommended workflow:
+From inside the `knot/` framework directory, omit the first `knot/` prefix:
 
 ```bash
-# 1. Clean previous runtime state and regenerate everything
-python skills/knot-init/init_project.py --knot-dir knot --clean --tool claude
+cd knot
 
-# 2. Once preflight passes, start the Knot loop
-./knot/core/knot.sh --tool claude
+python3 automation/scripts/validate_schema.py \
+  --schema automation/schemas/taskboard.schema.json \
+  --input runtime/taskboard.json
+
+python3 automation/scripts/run_preflight.py --knot-dir .
 ```
 
-Common flags:
+## Templates
 
-| Flag | Description |
-|------|-------------|
-| `--knot-dir` | **Required.** Path to the Knot directory. |
-| `--project-root` | Project root. Defaults to the parent of `--knot-dir`. |
-| `--clean` | Remove previous runtime files (`taskboard.json`, `progress.txt`, etc.). `outputs/` and `assets/` are preserved. |
-| `--skip-spec` | Skip `project-spec.json` generation. |
-| `--tool` | AI CLI to use (`claude` or `amp`). Defaults to `claude`. |
-| `--dry-run` | Show what would be written without touching files. |
-| `--max-episodes` | Cap on detected episodes. Defaults to 50. |
+Templates are examples, not Knot core behavior.
 
-Episode detection supports `Episode-01.md`, `ep01-xxx.md`, `第1集-xxx.md`, and `EP01.md`. Each episode expands into 3 dependent stories by default: `DIR` (director analysis) → `ART` (art/costume design) → `SB` (storyboard prompts). Episodes themselves are independent and can be processed in parallel.
+- `knot/examples/starter-empty/`: a schema-valid blank starter for a new content workflow.
+- `knot/examples/templates/seedance-short-drama/`: a 30-episode short-drama workflow that produces director analysis, art/scene prompt facts, and Seedance 2.0 storyboard prompts.
 
-For full skill documentation see [skills/knot-init/SKILL.md](skills/knot-init/SKILL.md) and [skills/knot-init/README.md](skills/knot-init/README.md).
+The Seedance template includes `knot/examples/templates/seedance-short-drama/knot-init/`, a template-specific initializer. The generic Knot framework does not assume episode scripts, short-drama stages, or Seedance prompts.
+
+## Agent Skill
+
+The generic runtime-preparation skill is shipped as source in `skills/knot-runtime/`. Keeping it there makes the release self-contained, but that path is not automatically loaded by most agents.
+
+Install it into the host project when you want an agent to prepare or refresh `knot/runtime/` from the host project's materials:
+
+- Codex-style agents: `.agents/skills/knot-runtime/`
+- Claude Code: `.claude/skills/knot-runtime/`
+
+The skill should generate or update only:
+
+- `knot/runtime/project-brief.md`
+- `knot/runtime/project-spec.json`
+- `knot/runtime/taskboard.json`
+- `knot/runtime/progress.txt`
 
 ## Core Inputs
 
@@ -149,8 +178,8 @@ Knot does not require a PRD.
 
 The minimum operating set is:
 
-- `runtime/project-spec.json`
-- `runtime/taskboard.json`
-- `runtime/progress.txt`
+- `knot/runtime/project-spec.json`
+- `knot/runtime/taskboard.json`
+- `knot/runtime/progress.txt`
 
-By default, `runtime/project-spec.json` can now be generated by AI from `runtime/project-brief.md` plus scanned project context.
+`knot/runtime/project-spec.json` can be generated by AI from `knot/runtime/project-brief.md` plus scanned project context, or written manually against the schema.

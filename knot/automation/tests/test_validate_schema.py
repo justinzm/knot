@@ -67,6 +67,62 @@ class ValidateSchemaCliTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("VALID", result.stdout)
 
+    def test_default_runtime_project_spec_passes(self) -> None:
+        result = self.run_cli(
+            "--schema",
+            str(KNOT_DIR / "automation" / "schemas" / "project-spec.schema.json"),
+            "--input",
+            str(KNOT_DIR / "runtime" / "project-spec.json"),
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("VALID", result.stdout)
+
+    def test_default_runtime_taskboard_passes(self) -> None:
+        result = self.run_cli(
+            "--schema",
+            str(KNOT_DIR / "automation" / "schemas" / "taskboard.schema.json"),
+            "--input",
+            str(KNOT_DIR / "runtime" / "taskboard.json"),
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("VALID", result.stdout)
+
+    def test_starter_empty_examples_pass(self) -> None:
+        project_spec = self.run_cli(
+            "--schema",
+            str(KNOT_DIR / "automation" / "schemas" / "project-spec.schema.json"),
+            "--input",
+            str(KNOT_DIR / "examples" / "starter-empty" / "project-spec.json"),
+        )
+        taskboard = self.run_cli(
+            "--schema",
+            str(KNOT_DIR / "automation" / "schemas" / "taskboard.schema.json"),
+            "--input",
+            str(KNOT_DIR / "examples" / "starter-empty" / "taskboard.json"),
+        )
+
+        self.assertEqual(project_spec.returncode, 0, project_spec.stderr)
+        self.assertEqual(taskboard.returncode, 0, taskboard.stderr)
+
+    def test_seedance_template_examples_pass(self) -> None:
+        project_spec = self.run_cli(
+            "--schema",
+            str(KNOT_DIR / "automation" / "schemas" / "project-spec.schema.json"),
+            "--input",
+            str(KNOT_DIR / "examples" / "templates" / "seedance-short-drama" / "project-spec.json"),
+        )
+        taskboard = self.run_cli(
+            "--schema",
+            str(KNOT_DIR / "automation" / "schemas" / "taskboard.schema.json"),
+            "--input",
+            str(KNOT_DIR / "examples" / "templates" / "seedance-short-drama" / "taskboard.json"),
+        )
+
+        self.assertEqual(project_spec.returncode, 0, project_spec.stderr)
+        self.assertEqual(taskboard.returncode, 0, taskboard.stderr)
+
     def test_invalid_review_result_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             invalid_path = Path(tmp_dir) / "invalid-review.json"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knot Runtime"
+  short_description: "Prepare a project to run with Knot."
+  default_prompt: "Prepare this content project for Knot execution."

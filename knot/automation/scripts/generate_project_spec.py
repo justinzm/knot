@@ -7,7 +7,7 @@ import os
 import shutil
 import subprocess
 import sys
-from pathlib import Path
+from pathlib import Path, PurePath
 
 try:
     from validate_schema import validate_json
@@ -131,7 +131,7 @@ def build_cli_command(tool: str) -> list[str]:
     if not resolved:
         raise RuntimeError(f"{tool} command not found in PATH")
 
-    resolved_path = Path(resolved)
+    resolved_path = PurePath(resolved)
     suffix = resolved_path.suffix.lower()
 
     if os.name == "nt" and suffix == ".ps1":

@@ -1,7 +1,12 @@
 import tempfile
+import sys
 import unittest
 from pathlib import Path
 from unittest import mock
+
+ROOT = Path(__file__).resolve().parents[3]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from knot.automation.scripts.generate_project_spec import (
     build_cli_command,
@@ -20,7 +25,7 @@ class GenerateProjectSpecTests(unittest.TestCase):
         self.assertEqual(payload["project_id"], "demo")
 
     def test_slugify_returns_machine_friendly_id(self) -> None:
-        self.assertEqual(slugify("AI Shot Team Seedance"), "ai-shot-team-seedance")
+        self.assertEqual(slugify("Content Ops Demo"), "content-ops-demo")
 
     def test_collect_project_context_mentions_key_files(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -45,8 +50,8 @@ class GenerateProjectSpecTests(unittest.TestCase):
         self.assertIn("assets:", context)
 
     def test_build_prompt_includes_brief_and_context(self) -> None:
-        prompt = build_prompt("RULES", "Need a short-drama pipeline", "PROJECT CONTEXT")
-        self.assertIn("Need a short-drama pipeline", prompt)
+        prompt = build_prompt("RULES", "Need a content workflow", "PROJECT CONTEXT")
+        self.assertIn("Need a content workflow", prompt)
         self.assertIn("PROJECT CONTEXT", prompt)
 
     def test_build_cli_command_wraps_powershell_script_on_windows(self) -> None:
