@@ -13,7 +13,7 @@
     "stages": [
       "replace-with-first-stage"
     ],
-    "artifact_root": "artifacts/",
+    "artifact_root": "outputs/",
     "fact_root": "facts/",
     "review_root": "reviews/"
   },
@@ -28,7 +28,7 @@
   },
   "naming": {
     "story_prefix": "ST",
-    "artifact_convention": "Replace this with path and filename conventions for generated artifacts."
+    "artifact_convention": "Replace this with path and filename conventions for generated outputs."
   },
   "metadata": {},
   "extensions": {}

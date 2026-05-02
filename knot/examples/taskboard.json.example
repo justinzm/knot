@@ -15,7 +15,7 @@
         "inputs/episode-01-brief.md"
       ],
       "outputs": [
-        "artifacts/episode-01/outline.md"
+        "outputs/episode-01/outline.md"
       ],
       "dependencies": [],
       "acceptance_criteria": [
@@ -60,12 +60,12 @@
       "status": "todo",
       "inputs": [
         "runtime/project-spec.json",
-        "artifacts/episode-01/outline.md",
+        "outputs/episode-01/outline.md",
         "facts/character-library.json",
         "facts/scene-library.json"
       ],
       "outputs": [
-        "artifacts/episode-01/scene-prompts.json"
+        "outputs/episode-01/scene-prompts.json"
       ],
       "dependencies": [
         "ST-001"

@@ -11,8 +11,8 @@ Produce a small content package that demonstrates the Knot loop without binding 
 
 ## Outputs
 
-- `artifacts/demo/outline.md`: a concise outline for a short educational post.
-- `artifacts/demo/post-draft.md`: a publishable draft based on the approved outline.
+- `outputs/demo/outline.md`: a concise outline for a short educational post.
+- `outputs/demo/post-draft.md`: a publishable draft based on the approved outline.
 
 ## Content Request
 

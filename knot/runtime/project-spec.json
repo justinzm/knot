@@ -14,7 +14,7 @@
       "outline",
       "draft"
     ],
-    "artifact_root": "artifacts/",
+    "artifact_root": "outputs/",
     "fact_root": "runtime/",
     "review_root": "runtime/reviews/"
   },
@@ -29,7 +29,7 @@
   },
   "naming": {
     "story_prefix": "ST",
-    "artifact_convention": "Demo artifacts live under artifacts/demo/ and use stable stage-based filenames."
+    "artifact_convention": "Demo outputs live under outputs/demo/ and use stable stage-based filenames."
   },
   "metadata": {
     "demo": true

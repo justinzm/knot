@@ -16,7 +16,7 @@
       "prompting",
       "review"
     ],
-    "artifact_root": "artifacts/",
+    "artifact_root": "outputs/",
     "fact_root": "facts/",
     "review_root": "reviews/"
   },

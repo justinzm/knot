@@ -15,7 +15,7 @@
         "runtime/project-spec.json"
       ],
       "outputs": [
-        "artifacts/replace-with-output.md"
+        "outputs/replace-with-output.md"
       ],
       "dependencies": [],
       "acceptance_criteria": [
