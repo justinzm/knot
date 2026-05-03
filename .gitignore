@@ -6,6 +6,7 @@ __pycache__/
 # OS/editor noise
 .DS_Store
 Thumbs.db
+.worktrees/
 
 # Knot runtime outputs
 knot/runtime/reviews/
