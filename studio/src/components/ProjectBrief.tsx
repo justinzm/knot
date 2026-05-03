@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { normalizeUnknownError } from "../lib/errors";
 import { saveProjectBrief } from "../lib/knot/tauri";
 import type { RuntimeSnapshot } from "../lib/knot/types";
 
@@ -10,12 +11,20 @@ interface ProjectBriefProps {
 
 export function ProjectBrief({ snapshot, onSnapshotChange }: ProjectBriefProps) {
   const [draft, setDraft] = useState(snapshot.projectBrief);
+  const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setDraft(snapshot.projectBrief);
+  }, [snapshot.knotRoot, snapshot.projectBrief]);
 
   async function handleSave() {
     setSaving(true);
+    setError(null);
     try {
       onSnapshotChange(await saveProjectBrief(snapshot.knotRoot, draft));
+    } catch (caught) {
+      setError(normalizeUnknownError(caught));
     } finally {
       setSaving(false);
     }
@@ -31,6 +40,7 @@ export function ProjectBrief({ snapshot, onSnapshotChange }: ProjectBriefProps) 
       <button className="primary-button" onClick={handleSave} disabled={saving}>
         {saving ? "Saving..." : "Save brief"}
       </button>
+      {error ? <p className="error-text">{error}</p> : null}
     </section>
   );
 }

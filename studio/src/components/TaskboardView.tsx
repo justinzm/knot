@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
+import { normalizeUnknownError } from "../lib/errors";
 import { saveTaskboard } from "../lib/knot/tauri";
 import type { RuntimeSnapshot, Taskboard } from "../lib/knot/types";
 import { validateTaskboardBasics } from "../lib/knot/validation";
@@ -13,15 +14,24 @@ export function TaskboardView({ snapshot, onSnapshotChange }: TaskboardViewProps
   const [draft, setDraft] = useState(snapshot.taskboardJson);
   const parsed = useMemo(() => parseTaskboard(draft), [draft]);
   const issues = parsed.ok ? validateTaskboardBasics(parsed.value) : [];
+  const hasBlockingIssue = issues.some((issue) => issue.severity === "error");
+  const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    setDraft(snapshot.taskboardJson);
+  }, [snapshot.knotRoot, snapshot.taskboardJson]);
+
   async function handleSave() {
-    if (!parsed.ok || issues.some((issue) => issue.severity === "error")) {
+    if (!parsed.ok || hasBlockingIssue) {
       return;
     }
     setSaving(true);
+    setError(null);
     try {
       onSnapshotChange(await saveTaskboard(snapshot.knotRoot, JSON.stringify(parsed.value, null, 2) + "\n"));
+    } catch (caught) {
+      setError(normalizeUnknownError(caught));
     } finally {
       setSaving(false);
     }
@@ -49,9 +59,10 @@ export function TaskboardView({ snapshot, onSnapshotChange }: TaskboardViewProps
           ))}
         </aside>
       </div>
-      <button className="primary-button" onClick={handleSave} disabled={!parsed.ok || saving}>
+      <button className="primary-button" onClick={handleSave} disabled={!parsed.ok || hasBlockingIssue || saving}>
         {saving ? "Saving..." : "Save taskboard"}
       </button>
+      {error ? <p className="error-text">{error}</p> : null}
     </section>
   );
 }

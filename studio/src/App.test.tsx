@@ -25,6 +25,18 @@ function setInputValue(input: HTMLInputElement, value: string) {
   input.dispatchEvent(new Event("input", { bubbles: true }));
 }
 
+function setTextareaValue(textarea: HTMLTextAreaElement, value: string) {
+  const valueSetter = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value")?.set;
+  valueSetter?.call(textarea, value);
+  textarea.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+function clickNavItem(container: HTMLElement, label: string) {
+  (Array.from(container.querySelectorAll(".nav-item")).find((button) =>
+    button.textContent?.includes(label),
+  ) as HTMLButtonElement).click();
+}
+
 const loadedSnapshot = {
   knotRoot: "/tmp/project/knot",
   projectBrief: "# Demo brief\n",
@@ -78,6 +90,49 @@ const loadedSnapshot = {
     ],
   })}\n`,
   progressText: "",
+};
+
+const duplicateStoryIdsSnapshot = {
+  ...loadedSnapshot,
+  taskboardJson: `${JSON.stringify({
+    project: "demo",
+    workflow: "produce",
+    description: "Demo taskboard",
+    stories: [
+      {
+        id: "S1",
+        title: "Draft scene",
+        stage: "draft",
+        description: "Write the scene.",
+        priority: 1,
+        status: "todo",
+        inputs: ["script/source.md"],
+        outputs: ["outputs/scene.md"],
+        dependencies: [],
+        acceptance_criteria: ["Scene exists."],
+        review_policy: {
+          required_gates: ["existence"],
+        },
+        notes: "",
+      },
+      {
+        id: "S1",
+        title: "Review scene",
+        stage: "review",
+        description: "Review the scene.",
+        priority: 2,
+        status: "todo",
+        inputs: ["outputs/scene.md"],
+        outputs: ["outputs/scene-reviewed.md"],
+        dependencies: [],
+        acceptance_criteria: ["Review exists."],
+        review_policy: {
+          required_gates: ["existence"],
+        },
+        notes: "",
+      },
+    ],
+  })}\n`,
 };
 
 async function renderApp() {
@@ -173,9 +228,7 @@ describe("App", () => {
       (container.querySelector("button.primary-button") as HTMLButtonElement).click();
     });
     await act(async () => {
-      (Array.from(container.querySelectorAll(".nav-item")).find((button) =>
-        button.textContent?.includes("Project Brief"),
-      ) as HTMLButtonElement).click();
+      clickNavItem(container, "Project Brief");
     });
 
     expect(container.querySelector("h2")?.textContent).toBe("Project Brief");
@@ -196,9 +249,7 @@ describe("App", () => {
       (container.querySelector("button.primary-button") as HTMLButtonElement).click();
     });
     await act(async () => {
-      (Array.from(container.querySelectorAll(".nav-item")).find((button) =>
-        button.textContent?.includes("Project Spec"),
-      ) as HTMLButtonElement).click();
+      clickNavItem(container, "Project Spec");
     });
 
     expect(container.querySelector("h2")?.textContent).toBe("Project Spec");
@@ -220,15 +271,88 @@ describe("App", () => {
       (container.querySelector("button.primary-button") as HTMLButtonElement).click();
     });
     await act(async () => {
-      (Array.from(container.querySelectorAll(".nav-item")).find((button) =>
-        button.textContent?.includes("Taskboard"),
-      ) as HTMLButtonElement).click();
+      clickNavItem(container, "Taskboard");
     });
 
     expect(container.querySelector("h2")?.textContent).toBe("Taskboard");
     expect((container.querySelector("textarea") as HTMLTextAreaElement).value).toContain('"stories"');
     expect(container.textContent).toContain("No client-side issues.");
     expect(container.querySelector("button.primary-button")?.textContent).toBe("Save taskboard");
+
+    await cleanup();
+  });
+
+  it("renders rejected project brief save errors", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    saveProjectBriefMock.mockRejectedValueOnce({ message: "save failed" });
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Project Brief");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+
+    expect(container.querySelector(".error-text")?.textContent).toBe("save failed");
+    expect(container.querySelector("button.primary-button")?.textContent).toBe("Save brief");
+
+    await cleanup();
+  });
+
+  it("disables taskboard save when duplicate story ids are present", async () => {
+    openRuntimeMock.mockResolvedValueOnce(duplicateStoryIdsSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Taskboard");
+    });
+
+    expect(container.textContent).toContain("Story id S1 is duplicated.");
+    expect((container.querySelector("button.primary-button") as HTMLButtonElement).disabled).toBe(true);
+
+    await cleanup();
+  });
+
+  it("syncs the project brief draft when the snapshot content changes", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    saveProjectBriefMock.mockResolvedValueOnce({
+      ...loadedSnapshot,
+      projectBrief: "# Server updated brief\n",
+    });
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Project Brief");
+    });
+    await act(async () => {
+      setTextareaValue(container.querySelector("textarea") as HTMLTextAreaElement, "# Local edit\n");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+
+    expect((container.querySelector("textarea") as HTMLTextAreaElement).value).toBe(
+      "# Server updated brief\n",
+    );
 
     await cleanup();
   });

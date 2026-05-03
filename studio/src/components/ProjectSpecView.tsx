@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
+import { normalizeUnknownError } from "../lib/errors";
 import { saveProjectSpec } from "../lib/knot/tauri";
 import type { ProjectSpec, RuntimeSnapshot } from "../lib/knot/types";
 
@@ -11,7 +12,12 @@ interface ProjectSpecViewProps {
 export function ProjectSpecView({ snapshot, onSnapshotChange }: ProjectSpecViewProps) {
   const initialSpec = useMemo(() => parseSpec(snapshot.projectSpecJson), [snapshot.projectSpecJson]);
   const [draft, setDraft] = useState<ProjectSpec | null>(initialSpec.ok ? initialSpec.value : null);
+  const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setDraft(initialSpec.ok ? initialSpec.value : null);
+  }, [snapshot.knotRoot, initialSpec]);
 
   if (!initialSpec.ok) {
     return (
@@ -32,8 +38,11 @@ export function ProjectSpecView({ snapshot, onSnapshotChange }: ProjectSpecViewP
 
   async function handleSave() {
     setSaving(true);
+    setError(null);
     try {
       onSnapshotChange(await saveProjectSpec(snapshot.knotRoot, JSON.stringify(draft, null, 2) + "\n"));
+    } catch (caught) {
+      setError(normalizeUnknownError(caught));
     } finally {
       setSaving(false);
     }
@@ -100,6 +109,7 @@ export function ProjectSpecView({ snapshot, onSnapshotChange }: ProjectSpecViewP
       <button className="primary-button" onClick={handleSave} disabled={saving}>
         {saving ? "Saving..." : "Save spec"}
       </button>
+      {error ? <p className="error-text">{error}</p> : null}
     </section>
   );
 }
