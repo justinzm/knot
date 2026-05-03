@@ -184,6 +184,43 @@ const dependencyCycleSnapshot = {
   })}\n`,
 };
 
+const missingDependencySnapshot = {
+  ...loadedSnapshot,
+  taskboardJson: `${JSON.stringify({
+    project: "demo",
+    workflow: "produce",
+    description: "Demo taskboard",
+    stories: [
+      {
+        id: "S1",
+        title: "Draft scene",
+        stage: "draft",
+        description: "Write the scene.",
+        priority: 1,
+        status: "todo",
+        inputs: ["script/source.md"],
+        outputs: ["outputs/scene.md"],
+        dependencies: ["S404"],
+        acceptance_criteria: ["Scene exists."],
+        review_policy: {
+          required_gates: ["existence"],
+        },
+        notes: "",
+      },
+    ],
+  })}\n`,
+};
+
+const emptyTaskboardSnapshot = {
+  ...loadedSnapshot,
+  taskboardJson: `${JSON.stringify({
+    project: "demo",
+    workflow: "produce",
+    description: "Demo taskboard",
+    stories: [],
+  })}\n`,
+};
+
 async function renderApp() {
   const container = document.createElement("div");
   document.body.append(container);
@@ -334,6 +371,24 @@ describe("App", () => {
     await cleanup();
   });
 
+  it("renders missing dependencies in the validation center", async () => {
+    openRuntimeMock.mockResolvedValueOnce(missingDependencySnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Validation Center");
+    expect(container.textContent).toContain("missing dependency");
+    expect(container.textContent).toContain("S404 -> S1");
+
+    await cleanup();
+  });
+
   it("renders the taskboard story list and inspector for loaded runtimes", async () => {
     openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
     const { container, cleanup } = await renderApp();
@@ -411,6 +466,67 @@ describe("App", () => {
     await cleanup();
   });
 
+  it("keeps invalid priority edits from being saved", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    saveTaskboardMock.mockResolvedValueOnce(loadedSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Taskboard");
+    });
+
+    const priorityInput = Array.from(container.querySelectorAll("input")).find(
+      (input) => input.getAttribute("type") === "number",
+    ) as HTMLInputElement;
+    await act(async () => {
+      setInputValue(priorityInput, "0");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+
+    expect(priorityInput.value).toBe("1");
+    expect(JSON.parse(saveTaskboardMock.mock.calls[0][1]).stories[0].priority).toBe(1);
+
+    await cleanup();
+  });
+
+  it("renders required gates as fixed choices", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Taskboard");
+    });
+
+    const gateCheckboxes = Array.from(container.querySelectorAll("input[type='checkbox']")) as HTMLInputElement[];
+    expect(container.textContent).not.toContain("Required gates, comma-separated");
+    expect(gateCheckboxes.map((checkbox) => checkbox.value)).toEqual([
+      "existence",
+      "structure",
+      "business",
+      "compliance",
+      "continuity",
+      "editorial",
+      "brand",
+      "custom",
+    ]);
+
+    await cleanup();
+  });
+
   it("renders rejected project brief save errors", async () => {
     openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
     saveProjectBriefMock.mockRejectedValueOnce({ message: "save failed" });
@@ -450,6 +566,26 @@ describe("App", () => {
     });
 
     expect(container.textContent).toContain("Story id S1 is duplicated.");
+    expect((container.querySelector("button.primary-button") as HTMLButtonElement).disabled).toBe(true);
+
+    await cleanup();
+  });
+
+  it("disables taskboard save when no stories are present", async () => {
+    openRuntimeMock.mockResolvedValueOnce(emptyTaskboardSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Taskboard");
+    });
+
+    expect(container.textContent).toContain("Taskboard must contain at least one story.");
     expect((container.querySelector("button.primary-button") as HTMLButtonElement).disabled).toBe(true);
 
     await cleanup();

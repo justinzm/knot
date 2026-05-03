@@ -91,9 +91,14 @@ button {
   max-width: 620px;
 }
 
-.field span {
+.field span,
+.field legend {
   color: #4d5a6f;
   font-size: 13px;
+}
+
+.field legend {
+  padding: 0;
 }
 
 .field input,
@@ -102,6 +107,21 @@ button {
   border: 1px solid #cbd3df;
   border-radius: 6px;
   padding: 10px 12px;
+}
+
+fieldset.field {
+  border: 0;
+  padding: 0;
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-field input {
+  padding: 0;
 }
 
 .primary-button {

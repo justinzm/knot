@@ -1,4 +1,15 @@
-import type { Story } from "../lib/knot/types";
+import type { GateName, Story } from "../lib/knot/types";
+
+const gateOptions: GateName[] = [
+  "existence",
+  "structure",
+  "business",
+  "compliance",
+  "continuity",
+  "editorial",
+  "brand",
+  "custom",
+];
 
 interface StoryInspectorProps {
   story: Story;
@@ -37,8 +48,9 @@ export function StoryInspector({ story, onChange }: StoryInspectorProps) {
         <input
           type="number"
           min={1}
+          step={1}
           value={story.priority}
-          onChange={(event) => onChange({ ...story, priority: Number(event.target.value) })}
+          onChange={(event) => onChange({ ...story, priority: parsePositiveInteger(event.target.value) })}
         />
       </label>
       <label className="field">
@@ -73,24 +85,39 @@ export function StoryInspector({ story, onChange }: StoryInspectorProps) {
           }
         />
       </label>
-      <label className="field">
-        <span>Required gates, comma-separated</span>
-        <input
-          value={story.review_policy.required_gates.join(", ")}
-          onChange={(event) =>
-            onChange({
-              ...story,
-              review_policy: {
-                ...story.review_policy,
-                required_gates: event.target.value
-                  .split(",")
-                  .map((gate) => gate.trim())
-                  .filter(Boolean) as Story["review_policy"]["required_gates"],
-              },
-            })
-          }
-        />
-      </label>
+      <fieldset className="field">
+        <legend>Required gates</legend>
+        {gateOptions.map((gate) => (
+          <label key={gate} className="checkbox-field">
+            <input
+              type="checkbox"
+              value={gate}
+              checked={story.review_policy.required_gates.includes(gate)}
+              onChange={(event) => {
+                const requiredGates = event.target.checked
+                  ? [...story.review_policy.required_gates, gate]
+                  : story.review_policy.required_gates.filter((requiredGate) => requiredGate !== gate);
+                onChange({
+                  ...story,
+                  review_policy: {
+                    ...story.review_policy,
+                    required_gates: gateOptions.filter((option) => requiredGates.includes(option)),
+                  },
+                });
+              }}
+            />
+            <span>{gate}</span>
+          </label>
+        ))}
+      </fieldset>
     </aside>
   );
+}
+
+function parsePositiveInteger(value: string): number {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed < 1) {
+    return 1;
+  }
+  return Math.floor(parsed);
 }

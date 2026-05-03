@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { detectDependencyCycles } from "../lib/knot/graph";
+import { detectDependencyCycles, taskboardToGraph } from "../lib/knot/graph";
 import type { RuntimeSnapshot, Taskboard } from "../lib/knot/types";
 import { validateTaskboardBasics } from "../lib/knot/validation";
 
@@ -22,11 +22,14 @@ export function ValidationCenter({ snapshot }: ValidationCenterProps) {
 
   const issues = validateTaskboardBasics(parsed.value);
   const cycles = detectDependencyCycles(parsed.value);
+  const missingDependencies = taskboardToGraph(parsed.value).missingDependencies;
 
   return (
     <section className="panel">
       <h2>Validation Center</h2>
-      {issues.length === 0 && cycles.length === 0 ? <p>No client-side validation issues.</p> : null}
+      {issues.length === 0 && cycles.length === 0 && missingDependencies.length === 0 ? (
+        <p>No client-side validation issues.</p>
+      ) : null}
       {issues.map((issue) => (
         <p key={`${issue.path}-${issue.message}`} className={issue.severity === "error" ? "error-text" : ""}>
           <strong>{issue.path}</strong>: {issue.message}
@@ -35,6 +38,11 @@ export function ValidationCenter({ snapshot }: ValidationCenterProps) {
       {cycles.map((cycle) => (
         <p key={cycle.join("-")} className="error-text">
           <strong>dependency cycle</strong>: {cycle.join(" -> ")}
+        </p>
+      ))}
+      {missingDependencies.map((dependency) => (
+        <p key={`${dependency.from}-${dependency.to}`} className="error-text">
+          <strong>missing dependency</strong>: {`${dependency.from} -> ${dependency.to}`}
         </p>
       ))}
     </section>

@@ -45,6 +45,14 @@ describe("validateTaskboardBasics", () => {
     });
   });
 
+  it("rejects taskboards with no stories", () => {
+    expect(validateTaskboardBasics({ ...validTaskboard, stories: [] })).toContainEqual({
+      path: "stories",
+      message: "Taskboard must contain at least one story.",
+      severity: "error",
+    });
+  });
+
   it("rejects absolute and parent traversal paths", () => {
     const invalid = {
       ...validTaskboard,

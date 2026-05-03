@@ -21,6 +21,14 @@ export function validateTaskboardBasics(taskboard: Taskboard): ValidationIssue[]
   const issues: ValidationIssue[] = [];
   const seenStoryIds = new Set<string>();
 
+  if (taskboard.stories.length === 0) {
+    issues.push({
+      path: "stories",
+      message: "Taskboard must contain at least one story.",
+      severity: "error",
+    });
+  }
+
   taskboard.stories.forEach((story, storyIndex) => {
     if (seenStoryIds.has(story.id)) {
       issues.push({
