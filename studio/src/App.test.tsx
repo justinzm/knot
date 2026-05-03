@@ -665,6 +665,50 @@ describe("App", () => {
     await cleanup();
   });
 
+  it("clears stale run output when a later command rejects", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    runPreflightMock
+      .mockResolvedValueOnce({
+        status: "pass",
+        exitCode: 0,
+        stdout: "previous stdout",
+        stderr: "",
+      })
+      .mockRejectedValueOnce({ message: "latest preflight rejected" });
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Run Console");
+    });
+    await act(async () => {
+      (Array.from(container.querySelectorAll("button")).find((button) =>
+        button.textContent?.includes("Run preflight"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(container.textContent).toContain("status: pass");
+    expect(container.textContent).toContain("previous stdout");
+
+    await act(async () => {
+      (Array.from(container.querySelectorAll("button")).find((button) =>
+        button.textContent?.includes("Run preflight"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(container.querySelector(".error-text")?.textContent).toBe("latest preflight rejected");
+    expect(container.textContent).toContain("No command has run yet.");
+    expect(container.textContent).not.toContain("status: pass");
+    expect(container.textContent).not.toContain("previous stdout");
+
+    await cleanup();
+  });
+
   it("renders explicit empty states for workflow and gate sections", async () => {
     openRuntimeMock.mockResolvedValueOnce(emptyTaskboardSnapshot);
     const { container, cleanup } = await renderApp();

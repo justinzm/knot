@@ -30,6 +30,7 @@ export function RunConsole({ snapshot }: RunConsoleProps) {
   async function runCommand(command: Exclude<RunningCommand, null>, runner: () => Promise<CommandRunResult>) {
     setRunningCommand(command);
     setError(null);
+    setResult(null);
     try {
       setResult(await runner());
     } catch (caught) {
