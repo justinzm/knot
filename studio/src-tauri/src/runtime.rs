@@ -57,6 +57,16 @@ pub fn discover_runtime(project_root: &Path) -> Result<RuntimeLocation, RuntimeE
     ))
 }
 
+pub fn validate_knot_root(knot_root: &Path) -> Result<(), RuntimeError> {
+    if is_knot_root(knot_root) {
+        Ok(())
+    } else {
+        Err(RuntimeError::KnotRootNotFound(
+            knot_root.display().to_string(),
+        ))
+    }
+}
+
 pub fn read_runtime_snapshot(knot_root: &Path) -> Result<RuntimeSnapshot, RuntimeError> {
     let runtime = knot_root.join("runtime");
     Ok(RuntimeSnapshot {
