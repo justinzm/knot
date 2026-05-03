@@ -6,12 +6,16 @@ const openRuntimeMock = vi.hoisted(() => vi.fn());
 const saveProjectBriefMock = vi.hoisted(() => vi.fn());
 const saveProjectSpecMock = vi.hoisted(() => vi.fn());
 const saveTaskboardMock = vi.hoisted(() => vi.fn());
+const runPreflightMock = vi.hoisted(() => vi.fn());
+const runLoopOnceMock = vi.hoisted(() => vi.fn());
 
 vi.mock("./lib/knot/tauri", () => ({
   openRuntime: openRuntimeMock,
   saveProjectBrief: saveProjectBriefMock,
   saveProjectSpec: saveProjectSpecMock,
   saveTaskboard: saveTaskboardMock,
+  runPreflight: runPreflightMock,
+  runLoopOnce: runLoopOnceMock,
 }));
 
 import { App } from "./App";
@@ -381,6 +385,8 @@ describe("App", () => {
     saveProjectBriefMock.mockReset();
     saveProjectSpecMock.mockReset();
     saveTaskboardMock.mockReset();
+    runPreflightMock.mockReset();
+    runLoopOnceMock.mockReset();
   });
 
   it("renders the runtime loading shell", async () => {
@@ -571,6 +577,90 @@ describe("App", () => {
     expect(container.textContent).toContain("Editorial pass");
     expect(container.textContent).toContain("editorial");
     expect(container.textContent).toContain("non-blocking");
+
+    await cleanup();
+  });
+
+  it("runs preflight and loop commands from the run console", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    runPreflightMock.mockResolvedValueOnce({
+      status: "pass",
+      exitCode: 0,
+      stdout: "preflight ok",
+      stderr: "",
+    });
+    runLoopOnceMock.mockResolvedValueOnce({
+      status: "fail",
+      exitCode: 2,
+      stdout: "loop output",
+      stderr: "loop failed",
+    });
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Run Console");
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Run Console");
+    expect(container.textContent).toContain("No command has run yet.");
+
+    await act(async () => {
+      (Array.from(container.querySelectorAll("button")).find((button) =>
+        button.textContent?.includes("Run preflight"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(runPreflightMock).toHaveBeenCalledWith("/tmp/project/knot");
+    expect(container.textContent).toContain("status: pass");
+    expect(container.textContent).toContain("exitCode: 0");
+    expect(container.textContent).toContain("preflight ok");
+
+    await act(async () => {
+      setSelectValue(container.querySelector("select") as HTMLSelectElement, "amp");
+    });
+    await act(async () => {
+      (Array.from(container.querySelectorAll("button")).find((button) =>
+        button.textContent?.includes("Start loop"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(runLoopOnceMock).toHaveBeenCalledWith("/tmp/project/knot", "amp", 10);
+    expect(container.textContent).toContain("status: fail");
+    expect(container.textContent).toContain("exitCode: 2");
+    expect(container.textContent).toContain("loop output");
+    expect(container.textContent).toContain("loop failed");
+
+    await cleanup();
+  });
+
+  it("renders run command rejection errors", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    runPreflightMock.mockRejectedValueOnce({ message: "preflight rejected" });
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Run Console");
+    });
+    await act(async () => {
+      (Array.from(container.querySelectorAll("button")).find((button) =>
+        button.textContent?.includes("Run preflight"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(container.querySelector(".error-text")?.textContent).toBe("preflight rejected");
+    expect(container.textContent).toContain("No command has run yet.");
 
     await cleanup();
   });

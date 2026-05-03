@@ -4,6 +4,7 @@ import { AppShell, type SectionId } from "./components/AppShell";
 import { GateRules } from "./components/GateRules";
 import { ProjectBrief } from "./components/ProjectBrief";
 import { ProjectSpecView } from "./components/ProjectSpecView";
+import { RunConsole } from "./components/RunConsole";
 import { Settings } from "./components/Settings";
 import { TaskboardView } from "./components/TaskboardView";
 import { ValidationCenter } from "./components/ValidationCenter";
@@ -65,6 +66,9 @@ function renderSection(
   }
   if (activeSection === "overview" || activeSection === "validation") {
     return <ValidationCenter snapshot={snapshot} />;
+  }
+  if (activeSection === "run") {
+    return <RunConsole snapshot={snapshot} />;
   }
   return (
     <section className="panel">

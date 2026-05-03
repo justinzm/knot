@@ -238,3 +238,27 @@ textarea {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 14px;
 }
+
+.run-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+.compact {
+  max-width: 180px;
+  margin-bottom: 0;
+}
+
+.log-output {
+  min-height: 220px;
+  overflow: auto;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #101828;
+  color: #f8fafc;
+  padding: 14px;
+  white-space: pre-wrap;
+}
