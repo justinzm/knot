@@ -10,6 +10,14 @@ Install the frontend and Tauri dependencies:
 npm install
 ```
 
+Install the repository Python requirements used by Studio runtime actions such as preflight and loop execution. From the `studio/` directory:
+
+```bash
+python3 -m pip install -r ../requirements.txt
+```
+
+These commands depend on the repository Python requirements, including `jsonschema`.
+
 Run the frontend test suite:
 
 ```bash
