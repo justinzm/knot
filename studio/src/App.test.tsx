@@ -211,6 +211,50 @@ const missingDependencySnapshot = {
   })}\n`,
 };
 
+const gateRulesSnapshot = {
+  ...loadedSnapshot,
+  taskboardJson: `${JSON.stringify({
+    project: "demo",
+    workflow: "produce",
+    description: "Demo taskboard",
+    stories: [
+      {
+        id: "S1",
+        title: "Draft scene",
+        stage: "draft",
+        description: "Write the scene.",
+        priority: 1,
+        status: "todo",
+        inputs: ["script/source.md"],
+        outputs: ["outputs/scene.md"],
+        dependencies: [],
+        acceptance_criteria: ["Scene exists."],
+        review_policy: {
+          required_gates: ["existence", "structure"],
+        },
+        notes: "",
+      },
+      {
+        id: "S2",
+        title: "Editorial pass",
+        stage: "review",
+        description: "Review the scene.",
+        priority: 2,
+        status: "ready",
+        inputs: ["outputs/scene.md"],
+        outputs: ["outputs/scene-reviewed.md"],
+        dependencies: ["S1"],
+        acceptance_criteria: ["Review exists."],
+        review_policy: {
+          required_gates: ["editorial"],
+          blocking: false,
+        },
+        notes: "",
+      },
+    ],
+  })}\n`,
+};
+
 const emptyTaskboardSnapshot = {
   ...loadedSnapshot,
   taskboardJson: `${JSON.stringify({
@@ -415,6 +459,58 @@ describe("App", () => {
     expect(container.querySelector("h2")?.textContent).toBe("Validation Center");
     expect(container.textContent).toContain("missing dependency");
     expect(container.textContent).toContain("S404 -> S1");
+
+    await cleanup();
+  });
+
+  it("renders the workflow builder with stages, dependencies, and missing dependencies", async () => {
+    openRuntimeMock.mockResolvedValueOnce(missingDependencySnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Workflow Builder");
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Workflow Builder");
+    expect(container.textContent).toContain("draft");
+    expect(container.textContent).toContain("S1");
+    expect(container.textContent).toContain("Draft scene");
+    expect(container.textContent).toContain("todo");
+    expect(container.textContent).toContain("Missing Dependencies");
+    expect(container.textContent).toContain("S404 -> S1");
+
+    await cleanup();
+  });
+
+  it("renders gate rules for loaded runtimes", async () => {
+    openRuntimeMock.mockResolvedValueOnce(gateRulesSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Gate Rules");
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Gate Rules");
+    expect(container.textContent).toContain("S1");
+    expect(container.textContent).toContain("Draft scene");
+    expect(container.textContent).toContain("existence, structure");
+    expect(container.textContent).toContain("blocking");
+    expect(container.textContent).toContain("S2");
+    expect(container.textContent).toContain("Editorial pass");
+    expect(container.textContent).toContain("editorial");
+    expect(container.textContent).toContain("non-blocking");
 
     await cleanup();
   });

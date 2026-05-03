@@ -140,6 +140,14 @@ fieldset.field {
   color: #b42318;
 }
 
+.banner {
+  border: 1px solid #f4b3ad;
+  border-radius: 6px;
+  background: #fff4f2;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
 .wide {
   max-width: none;
 }
@@ -163,10 +171,47 @@ textarea {
   background: #f8fafc;
 }
 
+.stage-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.stage-column {
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #f8fafc;
+  padding: 12px;
+}
+
+.story-card {
+  display: grid;
+  gap: 4px;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
 .table-list {
   display: grid;
   gap: 8px;
   margin-bottom: 18px;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 140px;
+  gap: 16px;
+  align-items: center;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.table-row p {
+  margin: 4px 0 0;
 }
 
 .table-list-row {

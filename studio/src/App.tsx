@@ -1,11 +1,13 @@
 import { useState } from "react";
 
 import { AppShell, type SectionId } from "./components/AppShell";
+import { GateRules } from "./components/GateRules";
 import { ProjectBrief } from "./components/ProjectBrief";
 import { ProjectSpecView } from "./components/ProjectSpecView";
 import { Settings } from "./components/Settings";
 import { TaskboardView } from "./components/TaskboardView";
 import { ValidationCenter } from "./components/ValidationCenter";
+import { WorkflowBuilder } from "./components/WorkflowBuilder";
 import type { RuntimeSnapshot } from "./lib/knot/types";
 
 export function App() {
@@ -54,6 +56,12 @@ function renderSection(
   }
   if (activeSection === "taskboard") {
     return <TaskboardView snapshot={snapshot} onSnapshotChange={onSnapshotChange} />;
+  }
+  if (activeSection === "workflow") {
+    return <WorkflowBuilder snapshot={snapshot} />;
+  }
+  if (activeSection === "gates") {
+    return <GateRules snapshot={snapshot} />;
   }
   if (activeSection === "overview" || activeSection === "validation") {
     return <ValidationCenter snapshot={snapshot} />;
