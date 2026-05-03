@@ -93,3 +93,10 @@ export interface RuntimeSnapshot {
   taskboardJson: string;
   progressText: string;
 }
+
+export interface CommandRunResult {
+  status: "pass" | "fail";
+  exitCode: number | null;
+  stdout: string;
+  stderr: string;
+}

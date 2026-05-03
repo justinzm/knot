@@ -1,4 +1,5 @@
 pub mod commands;
+pub mod process;
 pub mod runtime;
 
 pub fn run() {
@@ -7,7 +8,9 @@ pub fn run() {
             commands::open_runtime,
             commands::save_project_brief,
             commands::save_project_spec,
-            commands::save_taskboard
+            commands::save_taskboard,
+            commands::run_preflight,
+            commands::run_loop_once
         ])
         .run(tauri::generate_context!())
         .expect("failed to run Knot Studio");
