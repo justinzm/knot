@@ -143,6 +143,31 @@ textarea {
   background: #f8fafc;
 }
 
+.table-list {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.table-list-row {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr) 120px;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #d9dee8;
+  border-radius: 6px;
+  background: #ffffff;
+  color: inherit;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.table-list-row.active {
+  border-color: #2457c5;
+  background: #eef4ff;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

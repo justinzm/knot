@@ -5,6 +5,7 @@ import { ProjectBrief } from "./components/ProjectBrief";
 import { ProjectSpecView } from "./components/ProjectSpecView";
 import { Settings } from "./components/Settings";
 import { TaskboardView } from "./components/TaskboardView";
+import { ValidationCenter } from "./components/ValidationCenter";
 import type { RuntimeSnapshot } from "./lib/knot/types";
 
 export function App() {
@@ -53,6 +54,9 @@ function renderSection(
   }
   if (activeSection === "taskboard") {
     return <TaskboardView snapshot={snapshot} onSnapshotChange={onSnapshotChange} />;
+  }
+  if (activeSection === "overview" || activeSection === "validation") {
+    return <ValidationCenter snapshot={snapshot} />;
   }
   return (
     <section className="panel">
