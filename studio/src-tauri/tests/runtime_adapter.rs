@@ -1,7 +1,9 @@
 use std::fs;
 use std::path::Path;
 
-use knot_studio_lib::runtime::{discover_runtime, read_runtime_snapshot, write_atomic};
+use knot_studio_lib::runtime::{
+    discover_runtime, list_runtime_artifacts, read_runtime_snapshot, write_atomic,
+};
 
 #[test]
 fn discover_runtime_finds_direct_knot_root() {
@@ -107,6 +109,64 @@ fn read_runtime_snapshot_reads_known_files() {
     assert_eq!(snapshot.progress_text, "# Progress");
     assert!(snapshot.project_spec_json.contains("demo"));
     assert!(snapshot.taskboard_json.contains("demo"));
+}
+
+#[test]
+fn list_runtime_artifacts_reads_progress_reviews_and_project_outputs() {
+    let temp = tempfile::tempdir().expect("temp dir");
+    let project = temp.path();
+    let knot = project.join("knot");
+    create_knot_root(&knot);
+    fs::write(knot.join("runtime/progress.txt"), "progress log").expect("progress");
+    fs::create_dir_all(knot.join("runtime/reviews/preflight")).expect("reviews");
+    fs::write(
+        knot.join("runtime/reviews/preflight/latest.json"),
+        "{\"status\":\"pass\"}",
+    )
+    .expect("review");
+    fs::create_dir_all(project.join("outputs/scenes")).expect("outputs");
+    fs::write(project.join("outputs/scenes/scene.md"), "scene draft").expect("output");
+
+    let artifacts = list_runtime_artifacts(&knot).expect("artifacts");
+
+    let paths = artifacts
+        .iter()
+        .map(|artifact| {
+            (
+                artifact.kind.as_str(),
+                artifact.path.as_str(),
+                artifact.contents.as_str(),
+            )
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(
+        paths,
+        vec![
+            ("output", "outputs/scenes/scene.md", "scene draft"),
+            ("progress", "knot/runtime/progress.txt", "progress log"),
+            (
+                "review",
+                "knot/runtime/reviews/preflight/latest.json",
+                "{\"status\":\"pass\"}"
+            ),
+        ]
+    );
+    assert!(artifacts.iter().all(|artifact| artifact.exists));
+}
+
+#[test]
+fn list_runtime_artifacts_uses_empty_contents_for_unreadable_files() {
+    let temp = tempfile::tempdir().expect("temp dir");
+    let knot = temp.path().join("knot");
+    create_knot_root(&knot);
+    fs::write(knot.join("runtime/progress.txt"), [0xff, 0xfe, 0xfd]).expect("binary progress");
+
+    let artifacts = list_runtime_artifacts(&knot).expect("artifacts");
+
+    assert_eq!(artifacts.len(), 1);
+    assert_eq!(artifacts[0].path, "knot/runtime/progress.txt");
+    assert_eq!(artifacts[0].kind.as_str(), "progress");
+    assert_eq!(artifacts[0].contents, "");
 }
 
 fn create_knot_root(knot: &Path) {

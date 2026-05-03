@@ -1,7 +1,7 @@
 use std::fs;
 use std::path::Path;
 
-use knot_studio_lib::commands::{run_loop_once, run_preflight, save_taskboard};
+use knot_studio_lib::commands::{list_artifacts, run_loop_once, run_preflight, save_taskboard};
 
 #[test]
 fn save_taskboard_rejects_invalid_knot_root_without_creating_runtime_file() {
@@ -25,6 +25,20 @@ fn run_preflight_rejects_invalid_knot_root() {
     fs::create_dir_all(&invalid_root).expect("invalid root");
 
     let result = run_preflight(invalid_root.display().to_string());
+
+    assert!(result.is_err());
+    assert!(result
+        .expect_err("invalid root")
+        .contains(&invalid_root.display().to_string()));
+}
+
+#[test]
+fn list_artifacts_rejects_invalid_knot_root() {
+    let temp = tempfile::tempdir().expect("temp dir");
+    let invalid_root = temp.path().join("not-knot");
+    fs::create_dir_all(&invalid_root).expect("invalid root");
+
+    let result = list_artifacts(invalid_root.display().to_string());
 
     assert!(result.is_err());
     assert!(result

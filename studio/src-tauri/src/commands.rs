@@ -2,7 +2,8 @@ use std::path::PathBuf;
 
 use crate::process::{run_loop_process, run_preflight_process, CommandRunResult};
 use crate::runtime::{
-    discover_runtime, read_runtime_snapshot, validate_knot_root, write_atomic, RuntimeSnapshot,
+    discover_runtime, list_runtime_artifacts, read_runtime_snapshot, validate_knot_root,
+    write_atomic, ArtifactEntry, RuntimeSnapshot,
 };
 
 #[tauri::command]
@@ -44,6 +45,13 @@ pub fn run_preflight(knot_root: String) -> Result<CommandRunResult, String> {
     let knot_root = PathBuf::from(knot_root);
     validate_knot_root(&knot_root).map_err(|error| error.to_string())?;
     run_preflight_process(&knot_root).map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub fn list_artifacts(knot_root: String) -> Result<Vec<ArtifactEntry>, String> {
+    let knot_root = PathBuf::from(knot_root);
+    validate_knot_root(&knot_root).map_err(|error| error.to_string())?;
+    list_runtime_artifacts(&knot_root).map_err(|error| error.to_string())
 }
 
 #[tauri::command]

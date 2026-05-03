@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { AppShell, type SectionId } from "./components/AppShell";
 import { GateRules } from "./components/GateRules";
+import { OutputsBrowser } from "./components/OutputsBrowser";
 import { ProjectBrief } from "./components/ProjectBrief";
 import { ProjectSpecView } from "./components/ProjectSpecView";
 import { RunConsole } from "./components/RunConsole";
@@ -69,6 +70,9 @@ function renderSection(
   }
   if (activeSection === "run") {
     return <RunConsole snapshot={snapshot} />;
+  }
+  if (activeSection === "outputs") {
+    return <OutputsBrowser snapshot={snapshot} />;
   }
   return (
     <section className="panel">

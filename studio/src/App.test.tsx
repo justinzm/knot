@@ -8,6 +8,7 @@ const saveProjectSpecMock = vi.hoisted(() => vi.fn());
 const saveTaskboardMock = vi.hoisted(() => vi.fn());
 const runPreflightMock = vi.hoisted(() => vi.fn());
 const runLoopOnceMock = vi.hoisted(() => vi.fn());
+const listArtifactsMock = vi.hoisted(() => vi.fn());
 
 vi.mock("./lib/knot/tauri", () => ({
   openRuntime: openRuntimeMock,
@@ -16,6 +17,7 @@ vi.mock("./lib/knot/tauri", () => ({
   saveTaskboard: saveTaskboardMock,
   runPreflight: runPreflightMock,
   runLoopOnce: runLoopOnceMock,
+  listArtifacts: listArtifactsMock,
 }));
 
 import { App } from "./App";
@@ -387,6 +389,7 @@ describe("App", () => {
     saveTaskboardMock.mockReset();
     runPreflightMock.mockReset();
     runLoopOnceMock.mockReset();
+    listArtifactsMock.mockReset();
   });
 
   it("renders the runtime loading shell", async () => {
@@ -661,6 +664,73 @@ describe("App", () => {
 
     expect(container.querySelector(".error-text")?.textContent).toBe("preflight rejected");
     expect(container.textContent).toContain("No command has run yet.");
+
+    await cleanup();
+  });
+
+  it("renders outputs artifacts and selected previews", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    listArtifactsMock.mockResolvedValueOnce([
+      {
+        path: "outputs/scene.md",
+        kind: "output",
+        exists: true,
+        contents: "# Scene\nDraft",
+      },
+      {
+        path: "knot/runtime/reviews/preflight/latest.json",
+        kind: "review",
+        exists: true,
+        contents: "{\"status\":\"pass\"}",
+      },
+    ]);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Outputs");
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Outputs");
+    expect(listArtifactsMock).toHaveBeenCalledWith("/tmp/project/knot");
+    expect(container.textContent).toContain("outputs/scene.md");
+    expect(container.textContent).toContain("knot/runtime/reviews/preflight/latest.json");
+    expect(container.textContent).toContain("Select an artifact to preview it.");
+
+    await act(async () => {
+      (Array.from(container.querySelectorAll(".artifact-item")).find((button) =>
+        button.textContent?.includes("outputs/scene.md"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(container.textContent).toContain("# Scene");
+    expect(container.textContent).toContain("Draft");
+
+    await cleanup();
+  });
+
+  it("renders outputs refresh errors", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    listArtifactsMock.mockRejectedValueOnce({ message: "artifact failure" });
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Outputs");
+    });
+
+    expect(container.querySelector(".error-text")?.textContent).toBe("artifact failure");
+    expect(container.textContent).toContain("No artifacts found.");
 
     await cleanup();
   });

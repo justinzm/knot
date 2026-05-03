@@ -84,6 +84,24 @@ button {
   padding: 20px;
 }
 
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.section-header h2,
+.section-header p {
+  margin: 0;
+}
+
+.section-header p {
+  margin-top: 4px;
+  color: #4d5a6f;
+}
+
 .field {
   display: grid;
   gap: 6px;
@@ -254,6 +272,79 @@ textarea {
 
 .log-output {
   min-height: 220px;
+  overflow: auto;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #101828;
+  color: #f8fafc;
+  padding: 14px;
+  white-space: pre-wrap;
+}
+
+.artifact-browser {
+  display: grid;
+  grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+  gap: 16px;
+  min-height: 420px;
+}
+
+.artifact-list {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  overflow: auto;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #f8fafc;
+  padding: 12px;
+}
+
+.artifact-item {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  border: 1px solid #d9dee8;
+  border-radius: 6px;
+  background: #ffffff;
+  color: inherit;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.artifact-item.active {
+  border-color: #2457c5;
+  background: #eef4ff;
+}
+
+.artifact-item span,
+.artifact-item em,
+.artifact-preview span {
+  color: #4d5a6f;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.artifact-item strong {
+  overflow-wrap: anywhere;
+}
+
+.artifact-preview {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 14px;
+}
+
+.artifact-preview h3 {
+  margin: 4px 0 12px;
+  overflow-wrap: anywhere;
+}
+
+.artifact-preview pre {
+  min-height: 320px;
+  max-height: 560px;
   overflow: auto;
   border: 1px solid #d9dee8;
   border-radius: 8px;

@@ -10,6 +10,7 @@ pub fn run() {
             commands::save_project_spec,
             commands::save_taskboard,
             commands::run_preflight,
+            commands::list_artifacts,
             commands::run_loop_once
         ])
         .run(tauri::generate_context!())

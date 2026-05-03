@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 
-import type { CommandRunResult, RuntimeSnapshot } from "./types";
+import type { ArtifactEntry, CommandRunResult, RuntimeSnapshot } from "./types";
 
 export async function openRuntime(projectRoot: string): Promise<RuntimeSnapshot> {
   return invoke<RuntimeSnapshot>("open_runtime", { projectRoot });
@@ -23,6 +23,10 @@ export async function saveTaskboard(knotRoot: string, json: string): Promise<Run
 
 export async function runPreflight(knotRoot: string): Promise<CommandRunResult> {
   return invoke<CommandRunResult>("run_preflight", { knotRoot });
+}
+
+export async function listArtifacts(knotRoot: string): Promise<ArtifactEntry[]> {
+  return invoke<ArtifactEntry[]>("list_artifacts", { knotRoot });
 }
 
 export async function runLoopOnce(

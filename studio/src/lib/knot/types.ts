@@ -94,6 +94,13 @@ export interface RuntimeSnapshot {
   progressText: string;
 }
 
+export interface ArtifactEntry {
+  path: string;
+  kind: "output" | "review" | "progress";
+  exists: boolean;
+  contents: string;
+}
+
 export interface CommandRunResult {
   status: "pass" | "fail";
   exitCode: number | null;
