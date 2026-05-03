@@ -61,4 +61,28 @@ describe("validateTaskboardBasics", () => {
       "stories[0].inputs[1]",
     ]);
   });
+
+  it("rejects nested traversal and Windows absolute paths", () => {
+    const invalid = {
+      ...validTaskboard,
+      stories: [
+        {
+          ...validTaskboard.stories[0],
+          inputs: [
+            "outputs/../../secret.md",
+            "outputs\\..\\..\\secret.md",
+            "C:\\secret.md",
+            "\\\\server\\share\\file.md",
+          ],
+        },
+      ],
+    };
+
+    expect(validateTaskboardBasics(invalid).map((issue) => issue.path)).toEqual([
+      "stories[0].inputs[0]",
+      "stories[0].inputs[1]",
+      "stories[0].inputs[2]",
+      "stories[0].inputs[3]",
+    ]);
+  });
 });

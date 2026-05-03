@@ -1,18 +1,20 @@
 import type { Taskboard, ValidationIssue } from "./types";
 
-const drivePathPattern = /^[A-Za-z]:\\/;
+const drivePathPattern = /^[A-Za-z]:/;
 
 export function isLegalRuntimePath(path: string): boolean {
-  if (path.startsWith("/")) {
+  const normalizedPath = path.trim().replace(/\\/g, "/");
+
+  if (normalizedPath.length === 0) {
     return false;
   }
-  if (path.startsWith("../")) {
+  if (normalizedPath.startsWith("/")) {
     return false;
   }
-  if (drivePathPattern.test(path)) {
+  if (drivePathPattern.test(normalizedPath)) {
     return false;
   }
-  return path.trim().length > 0;
+  return !normalizedPath.split("/").includes("..");
 }
 
 export function validateTaskboardBasics(taskboard: Taskboard): ValidationIssue[] {
