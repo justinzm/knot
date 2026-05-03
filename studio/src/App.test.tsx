@@ -265,6 +265,66 @@ const emptyTaskboardSnapshot = {
   })}\n`,
 };
 
+const duplicateWorkflowRowsSnapshot = {
+  ...loadedSnapshot,
+  taskboardJson: `${JSON.stringify({
+    project: "demo",
+    workflow: "produce",
+    description: "Demo taskboard",
+    stories: [
+      {
+        id: "S1",
+        title: "Draft scene",
+        stage: "draft",
+        description: "Write the scene.",
+        priority: 1,
+        status: "todo",
+        inputs: ["script/source.md"],
+        outputs: ["outputs/scene.md"],
+        dependencies: [],
+        acceptance_criteria: ["Scene exists."],
+        review_policy: {
+          required_gates: ["existence"],
+        },
+        notes: "",
+      },
+      {
+        id: "S1",
+        title: "Review scene",
+        stage: "review",
+        description: "Review the scene.",
+        priority: 2,
+        status: "ready",
+        inputs: ["outputs/scene.md"],
+        outputs: ["outputs/scene-reviewed.md"],
+        dependencies: [],
+        acceptance_criteria: ["Review exists."],
+        review_policy: {
+          required_gates: ["editorial"],
+          blocking: false,
+        },
+        notes: "",
+      },
+      {
+        id: "S3",
+        title: "Publish scene",
+        stage: "publish",
+        description: "Publish the scene.",
+        priority: 3,
+        status: "blocked",
+        inputs: ["outputs/scene-reviewed.md"],
+        outputs: ["outputs/scene-published.md"],
+        dependencies: ["S1", "S1", "S404", "S404"],
+        acceptance_criteria: ["Publish exists."],
+        review_policy: {
+          required_gates: ["compliance"],
+        },
+        notes: "",
+      },
+    ],
+  })}\n`,
+};
+
 const invalidRequiredGatesSnapshot = {
   ...loadedSnapshot,
   taskboardJson: `${JSON.stringify({
@@ -512,6 +572,68 @@ describe("App", () => {
     expect(container.textContent).toContain("editorial");
     expect(container.textContent).toContain("non-blocking");
 
+    await cleanup();
+  });
+
+  it("renders explicit empty states for workflow and gate sections", async () => {
+    openRuntimeMock.mockResolvedValueOnce(emptyTaskboardSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Workflow Builder");
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Workflow Builder");
+    expect(container.textContent).toContain("No stories found");
+
+    await act(async () => {
+      clickNavItem(container, "Gate Rules");
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Gate Rules");
+    expect(container.textContent).toContain("No stories found");
+
+    await cleanup();
+  });
+
+  it("renders duplicate workflow and gate rows without React key warnings", async () => {
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    openRuntimeMock.mockResolvedValueOnce(duplicateWorkflowRowsSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    consoleErrorSpy.mockClear();
+    await act(async () => {
+      clickNavItem(container, "Workflow Builder");
+    });
+
+    expect(container.textContent).toContain("S1 -> S3");
+    expect(container.textContent).toContain("S404 -> S3");
+
+    await act(async () => {
+      clickNavItem(container, "Gate Rules");
+    });
+
+    expect(container.textContent).toContain("Review scene");
+    expect(container.textContent).toContain("non-blocking");
+    expect(
+      consoleErrorSpy.mock.calls.some((call) =>
+        call.some((part) => String(part).includes("Encountered two children with the same key")),
+      ),
+    ).toBe(false);
+
+    consoleErrorSpy.mockRestore();
     await cleanup();
   });
 

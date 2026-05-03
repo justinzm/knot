@@ -20,9 +20,10 @@ export function GateRules({ snapshot }: GateRulesProps) {
   return (
     <section className="panel">
       <h2>Gate Rules</h2>
+      {parsed.value.stories.length === 0 ? <p>No stories found</p> : null}
       <div className="table-list">
-        {parsed.value.stories.map((story) => (
-          <article className="table-row" key={story.id}>
+        {parsed.value.stories.map((story, index) => (
+          <article className="table-row" key={`${story.id}-${index}`}>
             <div>
               <strong>{story.id}</strong>
               <p>{story.title}</p>

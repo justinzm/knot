@@ -25,6 +25,7 @@ export function WorkflowBuilder({ snapshot }: WorkflowBuilderProps) {
   return (
     <section className="panel">
       <h2>Workflow Builder</h2>
+      {parsed.value.stories.length === 0 ? <p>No stories found</p> : null}
       {cycles.length > 0 ? (
         <div className="banner error-text">Dependency cycle: {cycles[0].join(" -> ")}</div>
       ) : null}
@@ -32,8 +33,8 @@ export function WorkflowBuilder({ snapshot }: WorkflowBuilderProps) {
         <div className="banner error-text">
           <strong>Missing Dependencies</strong>
           <ul>
-            {graph.missingDependencies.map((edge) => (
-              <li key={`${edge.from}-${edge.to}`}>
+            {graph.missingDependencies.map((edge, index) => (
+              <li key={`${edge.from}-${edge.to}-${index}`}>
                 {edge.from} {"->"} {edge.to}
               </li>
             ))}
@@ -46,8 +47,8 @@ export function WorkflowBuilder({ snapshot }: WorkflowBuilderProps) {
             <h3>{stage}</h3>
             {graph.nodes
               .filter((node) => node.stage === stage)
-              .map((node) => (
-                <article className="story-card" key={node.id}>
+              .map((node, index) => (
+                <article className="story-card" key={`${node.id}-${index}`}>
                   <strong>{node.id}</strong>
                   <span>{node.label}</span>
                   <small>{node.status}</small>
@@ -58,8 +59,8 @@ export function WorkflowBuilder({ snapshot }: WorkflowBuilderProps) {
       </div>
       <h3>Dependencies</h3>
       <ul>
-        {graph.edges.map((edge) => (
-          <li key={`${edge.from}-${edge.to}`}>
+        {graph.edges.map((edge, index) => (
+          <li key={`${edge.from}-${edge.to}-${index}`}>
             {edge.from} {"->"} {edge.to}
           </li>
         ))}
