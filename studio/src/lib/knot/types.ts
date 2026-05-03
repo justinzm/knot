@@ -87,11 +87,9 @@ export interface ValidationIssue {
 }
 
 export interface RuntimeSnapshot {
-  projectRoot: string;
   knotRoot: string;
   projectBrief: string;
-  projectSpec: ProjectSpec | null;
-  taskboard: Taskboard | null;
+  projectSpecJson: string;
+  taskboardJson: string;
   progressText: string;
-  validationIssues: ValidationIssue[];
 }
