@@ -62,6 +62,8 @@ It is a weaker fit for fully open-ended ideation with no review boundary.
   Optional domain templates such as `seedance-short-drama`.
 - `skills/knot-runtime/`
   Optional agent skill source to copy into `.agents/skills/` or `.claude/skills/`.
+- `studio/`
+  Optional local desktop application for visually building and running Knot workflows.
 - `docs/`
   Operator guide and schema reference.
 
@@ -145,6 +147,14 @@ python3 automation/scripts/validate_schema.py \
   --input runtime/taskboard.json
 
 python3 automation/scripts/run_preflight.py --knot-dir .
+```
+
+### Knot Studio desktop app
+
+```bash
+cd studio
+npm install
+npm run tauri dev
 ```
 
 ## Templates
