@@ -7,6 +7,29 @@ interface SettingsProps {
   onRuntimeLoaded: (snapshot: RuntimeSnapshot) => void;
 }
 
+function normalizeUnknownError(caught: unknown): string {
+  if (caught instanceof Error) {
+    return caught.message;
+  }
+  if (typeof caught === "string") {
+    return caught;
+  }
+  if (
+    caught &&
+    typeof caught === "object" &&
+    "message" in caught &&
+    typeof caught.message === "string"
+  ) {
+    return caught.message;
+  }
+
+  try {
+    return JSON.stringify(caught) ?? String(caught);
+  } catch {
+    return String(caught);
+  }
+}
+
 export function Settings({ onRuntimeLoaded }: SettingsProps) {
   const [projectRoot, setProjectRoot] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -19,7 +42,7 @@ export function Settings({ onRuntimeLoaded }: SettingsProps) {
       const snapshot = await openRuntime(projectRoot);
       onRuntimeLoaded(snapshot);
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : String(caught));
+      setError(normalizeUnknownError(caught));
     } finally {
       setLoading(false);
     }

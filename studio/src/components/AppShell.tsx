@@ -49,6 +49,7 @@ export function AppShell({
             <button
               key={section.id}
               className={`nav-item ${activeSection === section.id ? "active" : ""}`}
+              aria-current={activeSection === section.id ? "page" : undefined}
               onClick={() => onSectionChange(section.id)}
             >
               {section.label}
