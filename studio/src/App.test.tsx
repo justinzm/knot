@@ -221,6 +221,36 @@ const emptyTaskboardSnapshot = {
   })}\n`,
 };
 
+const invalidRequiredGatesSnapshot = {
+  ...loadedSnapshot,
+  taskboardJson: `${JSON.stringify({
+    ...JSON.parse(loadedSnapshot.taskboardJson),
+    stories: [
+      {
+        ...JSON.parse(loadedSnapshot.taskboardJson).stories[0],
+        review_policy: {
+          required_gates: ["unsafe"],
+        },
+      },
+    ],
+  })}\n`,
+};
+
+const emptyRequiredGatesSnapshot = {
+  ...loadedSnapshot,
+  taskboardJson: `${JSON.stringify({
+    ...JSON.parse(loadedSnapshot.taskboardJson),
+    stories: [
+      {
+        ...JSON.parse(loadedSnapshot.taskboardJson).stories[0],
+        review_policy: {
+          required_gates: [],
+        },
+      },
+    ],
+  })}\n`,
+};
+
 async function renderApp() {
   const container = document.createElement("div");
   document.body.append(container);
@@ -586,6 +616,46 @@ describe("App", () => {
     });
 
     expect(container.textContent).toContain("Taskboard must contain at least one story.");
+    expect((container.querySelector("button.primary-button") as HTMLButtonElement).disabled).toBe(true);
+
+    await cleanup();
+  });
+
+  it("disables taskboard save when loaded required gates are invalid", async () => {
+    openRuntimeMock.mockResolvedValueOnce(invalidRequiredGatesSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Taskboard");
+    });
+
+    expect(container.textContent).toContain("Gate unsafe is not supported.");
+    expect((container.querySelector("button.primary-button") as HTMLButtonElement).disabled).toBe(true);
+
+    await cleanup();
+  });
+
+  it("disables taskboard save when all required gates are unchecked", async () => {
+    openRuntimeMock.mockResolvedValueOnce(emptyRequiredGatesSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      clickNavItem(container, "Taskboard");
+    });
+
+    expect(container.textContent).toContain("Story must require at least one gate.");
     expect((container.querySelector("button.primary-button") as HTMLButtonElement).disabled).toBe(true);
 
     await cleanup();

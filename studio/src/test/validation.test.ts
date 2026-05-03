@@ -53,6 +53,48 @@ describe("validateTaskboardBasics", () => {
     });
   });
 
+  it("rejects stories with no required gates", () => {
+    const invalid = {
+      ...validTaskboard,
+      stories: [
+        {
+          ...validTaskboard.stories[0],
+          review_policy: {
+            ...validTaskboard.stories[0].review_policy,
+            required_gates: [],
+          },
+        },
+      ],
+    };
+
+    expect(validateTaskboardBasics(invalid)).toContainEqual({
+      path: "stories[0].review_policy.required_gates",
+      message: "Story must require at least one gate.",
+      severity: "error",
+    });
+  });
+
+  it("rejects unknown required gates", () => {
+    const invalid = {
+      ...validTaskboard,
+      stories: [
+        {
+          ...validTaskboard.stories[0],
+          review_policy: {
+            ...validTaskboard.stories[0].review_policy,
+            required_gates: ["existence", "unsafe"] as typeof validTaskboard.stories[0]["review_policy"]["required_gates"],
+          },
+        },
+      ],
+    };
+
+    expect(validateTaskboardBasics(invalid)).toContainEqual({
+      path: "stories[0].review_policy.required_gates[1]",
+      message: "Gate unsafe is not supported.",
+      severity: "error",
+    });
+  });
+
   it("rejects absolute and parent traversal paths", () => {
     const invalid = {
       ...validTaskboard,

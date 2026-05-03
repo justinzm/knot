@@ -1,6 +1,17 @@
-import type { Taskboard, ValidationIssue } from "./types";
+import type { GateName, Taskboard, ValidationIssue } from "./types";
 
 const drivePathPattern = /^[A-Za-z]:/;
+const gateNames: GateName[] = [
+  "existence",
+  "structure",
+  "business",
+  "compliance",
+  "continuity",
+  "editorial",
+  "brand",
+  "custom",
+];
+const gateNameSet = new Set<string>(gateNames);
 
 export function isLegalRuntimePath(path: string): boolean {
   const normalizedPath = path.trim().replace(/\\/g, "/");
@@ -38,6 +49,24 @@ export function validateTaskboardBasics(taskboard: Taskboard): ValidationIssue[]
       });
     }
     seenStoryIds.add(story.id);
+
+    if (story.review_policy.required_gates.length === 0) {
+      issues.push({
+        path: `stories[${storyIndex}].review_policy.required_gates`,
+        message: "Story must require at least one gate.",
+        severity: "error",
+      });
+    }
+
+    story.review_policy.required_gates.forEach((gate, gateIndex) => {
+      if (!gateNameSet.has(gate)) {
+        issues.push({
+          path: `stories[${storyIndex}].review_policy.required_gates[${gateIndex}]`,
+          message: `Gate ${gate} is not supported.`,
+          severity: "error",
+        });
+      }
+    });
 
     story.inputs.forEach((input, inputIndex) => {
       if (!isLegalRuntimePath(input)) {
