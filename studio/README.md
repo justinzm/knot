@@ -46,7 +46,7 @@ npm run tauri dev
 
 - Open and inspect a local Knot runtime.
 - Edit project brief, project spec, and taskboard files.
-- View workflow structure and gate rules.
-- Run validation checks from the desktop console.
+- View workflow structure, dependencies, and gate rules.
+- Run preflight from the desktop console.
 - Start Knot execution and inspect run output.
-- Browse generated outputs from the loaded runtime.
+- Inspect progress, review files, and output files from the loaded runtime.
