@@ -75,3 +75,47 @@ button {
   margin: 40px;
   max-width: 560px;
 }
+
+.panel {
+  margin: 24px;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 20px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+  max-width: 620px;
+}
+
+.field span {
+  color: #4d5a6f;
+  font-size: 13px;
+}
+
+.field input,
+.field textarea,
+.field select {
+  border: 1px solid #cbd3df;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.primary-button {
+  border: 0;
+  border-radius: 6px;
+  background: #2457c5;
+  color: #ffffff;
+  padding: 10px 14px;
+}
+
+.primary-button:disabled {
+  background: #aeb8c8;
+}
+
+.error-text {
+  color: #b42318;
+}
