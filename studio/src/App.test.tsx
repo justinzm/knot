@@ -3,9 +3,15 @@ import { createRoot } from "react-dom/client";
 import { act } from "react";
 
 const openRuntimeMock = vi.hoisted(() => vi.fn());
+const saveProjectBriefMock = vi.hoisted(() => vi.fn());
+const saveProjectSpecMock = vi.hoisted(() => vi.fn());
+const saveTaskboardMock = vi.hoisted(() => vi.fn());
 
 vi.mock("./lib/knot/tauri", () => ({
   openRuntime: openRuntimeMock,
+  saveProjectBrief: saveProjectBriefMock,
+  saveProjectSpec: saveProjectSpecMock,
+  saveTaskboard: saveTaskboardMock,
 }));
 
 import { App } from "./App";
@@ -18,6 +24,61 @@ function setInputValue(input: HTMLInputElement, value: string) {
   valueSetter?.call(input, value);
   input.dispatchEvent(new Event("input", { bubbles: true }));
 }
+
+const loadedSnapshot = {
+  knotRoot: "/tmp/project/knot",
+  projectBrief: "# Demo brief\n",
+  projectSpecJson: `${JSON.stringify({
+    project_id: "demo",
+    project_type: "video",
+    target_medium: "short-form",
+    language: "English",
+    audience: "Editors",
+    style: {
+      voice: "clear",
+      visual_style: "clean",
+      tone: "practical",
+    },
+    workflow: {
+      stages: ["brief", "draft"],
+      artifact_root: "outputs",
+      fact_root: "facts",
+      review_root: "reviews",
+    },
+    review_policy: {
+      required_gates: ["existence"],
+      notes: "Check files.",
+    },
+    naming: {
+      story_prefix: "S",
+      artifact_convention: "story-id",
+    },
+  })}\n`,
+  taskboardJson: `${JSON.stringify({
+    project: "demo",
+    workflow: "produce",
+    description: "Demo taskboard",
+    stories: [
+      {
+        id: "S1",
+        title: "Draft scene",
+        stage: "draft",
+        description: "Write the scene.",
+        priority: 1,
+        status: "todo",
+        inputs: ["script/source.md"],
+        outputs: ["outputs/scene.md"],
+        dependencies: [],
+        acceptance_criteria: ["Scene exists."],
+        review_policy: {
+          required_gates: ["existence"],
+        },
+        notes: "",
+      },
+    ],
+  })}\n`,
+  progressText: "",
+};
 
 async function renderApp() {
   const container = document.createElement("div");
@@ -42,6 +103,9 @@ async function renderApp() {
 describe("App", () => {
   beforeEach(() => {
     openRuntimeMock.mockReset();
+    saveProjectBriefMock.mockReset();
+    saveProjectSpecMock.mockReset();
+    saveTaskboardMock.mockReset();
   });
 
   it("renders the runtime loading shell", async () => {
@@ -94,6 +158,77 @@ describe("App", () => {
     });
 
     expect(container.querySelector(".error-text")?.textContent).toBe("object failure");
+
+    await cleanup();
+  });
+
+  it("renders the project brief editor for loaded runtimes", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      (Array.from(container.querySelectorAll(".nav-item")).find((button) =>
+        button.textContent?.includes("Project Brief"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Project Brief");
+    expect((container.querySelector("textarea") as HTMLTextAreaElement).value).toBe("# Demo brief\n");
+    expect(container.querySelector("button.primary-button")?.textContent).toBe("Save brief");
+
+    await cleanup();
+  });
+
+  it("renders the project spec editor for loaded runtimes", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      (Array.from(container.querySelectorAll(".nav-item")).find((button) =>
+        button.textContent?.includes("Project Spec"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Project Spec");
+    expect((container.querySelector("input") as HTMLInputElement).value).toBe("demo");
+    expect(container.textContent).toContain("Stages, comma-separated");
+    expect(container.querySelector("button.primary-button")?.textContent).toBe("Save spec");
+
+    await cleanup();
+  });
+
+  it("renders taskboard validation for loaded runtimes", async () => {
+    openRuntimeMock.mockResolvedValueOnce(loadedSnapshot);
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      setInputValue(container.querySelector("input") as HTMLInputElement, "/tmp/project");
+    });
+    await act(async () => {
+      (container.querySelector("button.primary-button") as HTMLButtonElement).click();
+    });
+    await act(async () => {
+      (Array.from(container.querySelectorAll(".nav-item")).find((button) =>
+        button.textContent?.includes("Taskboard"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(container.querySelector("h2")?.textContent).toBe("Taskboard");
+    expect((container.querySelector("textarea") as HTMLTextAreaElement).value).toContain('"stories"');
+    expect(container.textContent).toContain("No client-side issues.");
+    expect(container.querySelector("button.primary-button")?.textContent).toBe("Save taskboard");
 
     await cleanup();
   });

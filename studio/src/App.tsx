@@ -1,7 +1,10 @@
 import { useState } from "react";
 
 import { AppShell, type SectionId } from "./components/AppShell";
+import { ProjectBrief } from "./components/ProjectBrief";
+import { ProjectSpecView } from "./components/ProjectSpecView";
 import { Settings } from "./components/Settings";
+import { TaskboardView } from "./components/TaskboardView";
 import type { RuntimeSnapshot } from "./lib/knot/types";
 
 export function App() {
@@ -20,14 +23,41 @@ export function App() {
       status={snapshot ? "runtime loaded" : "idle"}
       onSectionChange={setActiveSection}
     >
-      {activeSection === "settings" ? (
-        <Settings onRuntimeLoaded={handleRuntimeLoaded} />
-      ) : (
-        <section className="panel">
-          <h2>{activeSection}</h2>
-          <p>{snapshot ? "Runtime is loaded." : "Open a runtime from Settings."}</p>
-        </section>
-      )}
+      {renderSection(activeSection, snapshot, handleRuntimeLoaded, setSnapshot)}
     </AppShell>
+  );
+}
+
+function renderSection(
+  activeSection: SectionId,
+  snapshot: RuntimeSnapshot | null,
+  onRuntimeLoaded: (snapshot: RuntimeSnapshot) => void,
+  onSnapshotChange: (snapshot: RuntimeSnapshot) => void,
+) {
+  if (activeSection === "settings") {
+    return <Settings onRuntimeLoaded={onRuntimeLoaded} />;
+  }
+  if (!snapshot) {
+    return (
+      <section className="panel">
+        <h2>{activeSection}</h2>
+        <p>Open a runtime from Settings.</p>
+      </section>
+    );
+  }
+  if (activeSection === "brief") {
+    return <ProjectBrief snapshot={snapshot} onSnapshotChange={onSnapshotChange} />;
+  }
+  if (activeSection === "spec") {
+    return <ProjectSpecView snapshot={snapshot} onSnapshotChange={onSnapshotChange} />;
+  }
+  if (activeSection === "taskboard") {
+    return <TaskboardView snapshot={snapshot} onSnapshotChange={onSnapshotChange} />;
+  }
+  return (
+    <section className="panel">
+      <h2>{activeSection}</h2>
+      <p>Runtime is loaded.</p>
+    </section>
   );
 }

@@ -119,3 +119,32 @@ button {
 .error-text {
   color: #b42318;
 }
+
+.wide {
+  max-width: none;
+}
+
+textarea {
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.split-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 18px;
+  align-items: start;
+}
+
+.validation-list {
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  padding: 14px;
+  background: #f8fafc;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
