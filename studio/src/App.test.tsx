@@ -9,6 +9,7 @@ const saveTaskboardMock = vi.hoisted(() => vi.fn());
 const runPreflightMock = vi.hoisted(() => vi.fn());
 const runLoopOnceMock = vi.hoisted(() => vi.fn());
 const listArtifactsMock = vi.hoisted(() => vi.fn());
+const openProjectFolderMock = vi.hoisted(() => vi.fn());
 
 vi.mock("./lib/knot/tauri", () => ({
   openRuntime: openRuntimeMock,
@@ -18,6 +19,10 @@ vi.mock("./lib/knot/tauri", () => ({
   runPreflight: runPreflightMock,
   runLoopOnce: runLoopOnceMock,
   listArtifacts: listArtifactsMock,
+}));
+
+vi.mock("./lib/knot/dialog", () => ({
+  openProjectFolder: openProjectFolderMock,
 }));
 
 import { App } from "./App";
@@ -397,6 +402,7 @@ describe("App", () => {
     runPreflightMock.mockReset();
     runLoopOnceMock.mockReset();
     listArtifactsMock.mockReset();
+    openProjectFolderMock.mockReset();
   });
 
   it("renders the runtime loading shell", async () => {
@@ -450,6 +456,24 @@ describe("App", () => {
     expect(container.textContent).toContain("Open Local Knot Project");
     expect(container.textContent).toContain("Project folder path");
     expect(container.querySelector("button.primary-button")?.textContent).toBe("Open runtime");
+
+    await cleanup();
+  });
+
+  it("selects the project folder from the system dialog", async () => {
+    openProjectFolderMock.mockResolvedValueOnce("/tmp/selected-project");
+    const { container, cleanup } = await renderApp();
+
+    await act(async () => {
+      (Array.from(container.querySelectorAll("button")).find((button) =>
+        button.textContent?.includes("Choose folder"),
+      ) as HTMLButtonElement).click();
+    });
+
+    expect(openProjectFolderMock).toHaveBeenCalledWith("Select Knot project folder");
+    expect((container.querySelector('input[placeholder="/Users/example/my-content-project"]') as HTMLInputElement).value).toBe(
+      "/tmp/selected-project",
+    );
 
     await cleanup();
   });

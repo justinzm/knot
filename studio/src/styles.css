@@ -154,6 +154,25 @@ fieldset.field {
   background: #aeb8c8;
 }
 
+.secondary-button {
+  border: 1px solid #cbd3df;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #172033;
+  padding: 10px 14px;
+}
+
+.secondary-button:disabled {
+  color: #7b8798;
+  background: #eef2f7;
+}
+
+.path-picker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
 .error-text {
   color: #b42318;
 }
