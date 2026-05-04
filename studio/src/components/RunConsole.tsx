@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { normalizeUnknownError } from "../lib/errors";
 import { runLoopOnce, runPreflight } from "../lib/knot/tauri";
@@ -12,6 +13,7 @@ type Tool = "claude" | "amp";
 type RunningCommand = "preflight" | "loop" | null;
 
 export function RunConsole({ snapshot }: RunConsoleProps) {
+  const { t } = useTranslation();
   const [tool, setTool] = useState<Tool>("claude");
   const [runningCommand, setRunningCommand] = useState<RunningCommand>(null);
   const [result, setResult] = useState<CommandRunResult | null>(null);
@@ -42,42 +44,43 @@ export function RunConsole({ snapshot }: RunConsoleProps) {
 
   return (
     <section className="panel">
-      <h2>Run Console</h2>
+      <h2>{t("run.title")}</h2>
       <div className="run-controls">
         <label className="field compact">
-          <span>AI tool</span>
+          <span>{t("run.tool")}</span>
           <select value={tool} onChange={(event) => setTool(event.target.value as Tool)} disabled={running}>
             <option value="claude">claude</option>
             <option value="amp">amp</option>
           </select>
         </label>
         <button className="primary-button" onClick={handleRunPreflight} disabled={running}>
-          {runningCommand === "preflight" ? "Running preflight..." : "Run preflight"}
+          {runningCommand === "preflight" ? t("run.runningPreflight") : t("run.runPreflight")}
         </button>
         <button className="primary-button" onClick={handleStartLoop} disabled={running}>
-          {runningCommand === "loop" ? "Running loop..." : "Start loop"}
+          {runningCommand === "loop" ? t("run.runningLoop") : t("run.startLoop")}
         </button>
       </div>
       <p>
-        <strong>Run status:</strong> {running ? `running ${runningCommand}` : "idle"}
+        <strong>{t("run.statusLabel")}</strong>{" "}
+        {running ? t("run.running", { command: runningCommand }) : t("run.idle")}
       </p>
       {error ? <p className="error-text">{error}</p> : null}
-      <pre className="log-output">{formatCommandResult(result)}</pre>
+      <pre className="log-output">{formatCommandResult(result, t)}</pre>
     </section>
   );
 }
 
-function formatCommandResult(result: CommandRunResult | null): string {
+function formatCommandResult(result: CommandRunResult | null, t: (key: string) => string): string {
   if (!result) {
-    return "No command has run yet.";
+    return t("run.noCommand");
   }
 
   return [
     `status: ${result.status}`,
     `exitCode: ${result.exitCode ?? "null"}`,
     "stdout:",
-    result.stdout || "(empty)",
+    result.stdout || t("run.empty"),
     "stderr:",
-    result.stderr || "(empty)",
+    result.stderr || t("run.empty"),
   ].join("\n");
 }

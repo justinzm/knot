@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppShell, type SectionId } from "./components/AppShell";
 import { GateRules } from "./components/GateRules";
@@ -10,9 +11,11 @@ import { Settings } from "./components/Settings";
 import { TaskboardView } from "./components/TaskboardView";
 import { ValidationCenter } from "./components/ValidationCenter";
 import { WorkflowBuilder } from "./components/WorkflowBuilder";
+import "./i18n";
 import type { RuntimeSnapshot } from "./lib/knot/types";
 
 export function App() {
+  const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState<SectionId>("settings");
   const [snapshot, setSnapshot] = useState<RuntimeSnapshot | null>(null);
 
@@ -25,10 +28,10 @@ export function App() {
     <AppShell
       activeSection={activeSection}
       knotRoot={snapshot?.knotRoot ?? null}
-      status={snapshot ? "runtime loaded" : "idle"}
+      status={snapshot ? t("app.status.runtimeLoaded") : t("app.status.idle")}
       onSectionChange={setActiveSection}
     >
-      {renderSection(activeSection, snapshot, handleRuntimeLoaded, setSnapshot)}
+      {renderSection(activeSection, snapshot, handleRuntimeLoaded, setSnapshot, t)}
     </AppShell>
   );
 }
@@ -38,6 +41,7 @@ function renderSection(
   snapshot: RuntimeSnapshot | null,
   onRuntimeLoaded: (snapshot: RuntimeSnapshot) => void,
   onSnapshotChange: (snapshot: RuntimeSnapshot) => void,
+  t: (key: string) => string,
 ) {
   if (activeSection === "settings") {
     return <Settings onRuntimeLoaded={onRuntimeLoaded} />;
@@ -45,8 +49,8 @@ function renderSection(
   if (!snapshot) {
     return (
       <section className="panel">
-        <h2>{activeSection}</h2>
-        <p>Open a runtime from Settings.</p>
+        <h2>{t(`nav.${activeSection}`)}</h2>
+        <p>{t("app.runtimeMissing")}</p>
       </section>
     );
   }
@@ -76,8 +80,8 @@ function renderSection(
   }
   return (
     <section className="panel">
-      <h2>{activeSection}</h2>
-      <p>Runtime is loaded.</p>
+      <h2>{t(`nav.${activeSection}`)}</h2>
+      <p>{t("app.runtimeLoadedFallback")}</p>
     </section>
   );
 }

@@ -21,6 +21,7 @@ vi.mock("./lib/knot/tauri", () => ({
 }));
 
 import { App } from "./App";
+import { i18n } from "./i18n";
 
 (globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT =
   true;
@@ -361,7 +362,13 @@ const emptyRequiredGatesSnapshot = {
   })}\n`,
 };
 
-async function renderApp() {
+async function renderApp(language: "default" | "en" | "zh" = "en") {
+  window.localStorage.clear();
+  if (language !== "default") {
+    window.localStorage.setItem("knot-studio-language", language);
+  }
+  await i18n.changeLanguage(language === "en" ? "en" : "zh");
+
   const container = document.createElement("div");
   document.body.append(container);
 
@@ -409,6 +416,39 @@ describe("App", () => {
     expect(container.querySelector("input")?.getAttribute("placeholder")).toBe(
       "/Users/example/my-content-project",
     );
+    expect(container.querySelector("button.primary-button")?.textContent).toBe("Open runtime");
+
+    await cleanup();
+  });
+
+  it("uses Chinese as the default interface language", async () => {
+    const { container, cleanup } = await renderApp("default");
+
+    expect(container.textContent).toContain("设置");
+    expect(container.textContent).toContain("未选择项目");
+    expect(container.textContent).toContain("空闲");
+    expect(container.textContent).toContain("打开本地 Knot 项目");
+    expect(container.textContent).toContain("项目文件夹路径");
+    expect(container.querySelector("button.primary-button")?.textContent).toBe("打开 runtime");
+
+    await cleanup();
+  });
+
+  it("switches the interface language from settings", async () => {
+    const { container, cleanup } = await renderApp();
+
+    const languageSelect = Array.from(container.querySelectorAll("select")).find((select) =>
+      select.textContent?.includes("English"),
+    ) as HTMLSelectElement;
+
+    await act(async () => {
+      setSelectValue(languageSelect, "en");
+    });
+
+    expect(container.textContent).toContain("Settings");
+    expect(container.textContent).toContain("No project selected");
+    expect(container.textContent).toContain("Open Local Knot Project");
+    expect(container.textContent).toContain("Project folder path");
     expect(container.querySelector("button.primary-button")?.textContent).toBe("Open runtime");
 
     await cleanup();

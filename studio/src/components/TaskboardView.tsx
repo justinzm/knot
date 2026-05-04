@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { normalizeUnknownError } from "../lib/errors";
 import { detectDependencyCycles } from "../lib/knot/graph";
@@ -13,6 +14,7 @@ interface TaskboardViewProps {
 }
 
 export function TaskboardView({ snapshot, onSnapshotChange }: TaskboardViewProps) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState(() => parseTaskboard(snapshot.taskboardJson));
   const [selectedStoryId, setSelectedStoryId] = useState(() => (draft.ok ? draft.value.stories[0]?.id ?? null : null));
   const [error, setError] = useState<string | null>(null);
@@ -61,14 +63,14 @@ export function TaskboardView({ snapshot, onSnapshotChange }: TaskboardViewProps
 
   return (
     <section className="panel">
-      <h2>Taskboard</h2>
+      <h2>{t("taskboard.title")}</h2>
       {!draft.ok ? (
         <p className="error-text">{draft.message}</p>
       ) : (
         <div className="split-panel">
           <div>
             {draft.value.stories.length === 0 ? (
-              <p>No stories in taskboard.</p>
+              <p>{t("taskboard.noStories")}</p>
             ) : (
               <div className="table-list">
                 {draft.value.stories.map((story, storyIndex) => (
@@ -85,8 +87,8 @@ export function TaskboardView({ snapshot, onSnapshotChange }: TaskboardViewProps
               </div>
             )}
             <div className="validation-list">
-              <h3>Validation</h3>
-              {issues.length === 0 && cycles.length === 0 ? <p>No client-side issues.</p> : null}
+              <h3>{t("taskboard.validation")}</h3>
+              {issues.length === 0 && cycles.length === 0 ? <p>{t("taskboard.noIssues")}</p> : null}
               {issues.map((issue) => (
                 <p
                   key={`${issue.path}-${issue.message}`}
@@ -97,7 +99,7 @@ export function TaskboardView({ snapshot, onSnapshotChange }: TaskboardViewProps
               ))}
               {cycles.map((cycle) => (
                 <p key={cycle.join("-")} className="error-text">
-                  <strong>dependency cycle</strong>: {cycle.join(" -> ")}
+                  <strong>{t("taskboard.dependencyCycle")}</strong>: {cycle.join(" -> ")}
                 </p>
               ))}
             </div>
@@ -106,7 +108,7 @@ export function TaskboardView({ snapshot, onSnapshotChange }: TaskboardViewProps
         </div>
       )}
       <button className="primary-button" onClick={handleSave} disabled={!draft.ok || hasBlockingIssue || saving}>
-        {saving ? "Saving..." : "Save taskboard"}
+        {saving ? t("taskboard.saving") : t("taskboard.save")}
       </button>
       {error ? <p className="error-text">{error}</p> : null}
     </section>

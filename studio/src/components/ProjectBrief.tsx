@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { normalizeUnknownError } from "../lib/errors";
 import { saveProjectBrief } from "../lib/knot/tauri";
@@ -10,6 +11,7 @@ interface ProjectBriefProps {
 }
 
 export function ProjectBrief({ snapshot, onSnapshotChange }: ProjectBriefProps) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState(snapshot.projectBrief);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -32,13 +34,13 @@ export function ProjectBrief({ snapshot, onSnapshotChange }: ProjectBriefProps) 
 
   return (
     <section className="panel">
-      <h2>Project Brief</h2>
+      <h2>{t("brief.title")}</h2>
       <label className="field wide">
-        <span>Brief markdown</span>
+        <span>{t("brief.markdown")}</span>
         <textarea value={draft} onChange={(event) => setDraft(event.target.value)} rows={18} />
       </label>
       <button className="primary-button" onClick={handleSave} disabled={saving}>
-        {saving ? "Saving..." : "Save brief"}
+        {saving ? t("brief.saving") : t("brief.save")}
       </button>
       {error ? <p className="error-text">{error}</p> : null}
     </section>

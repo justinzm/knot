@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { detectDependencyCycles, taskboardToGraph } from "../lib/knot/graph";
 import type { RuntimeSnapshot, Taskboard } from "../lib/knot/types";
@@ -8,11 +9,12 @@ interface WorkflowBuilderProps {
 }
 
 export function WorkflowBuilder({ snapshot }: WorkflowBuilderProps) {
+  const { t } = useTranslation();
   const parsed = useMemo(() => parseTaskboard(snapshot.taskboardJson), [snapshot.taskboardJson]);
   if (!parsed.ok) {
     return (
       <section className="panel">
-        <h2>Workflow Builder</h2>
+        <h2>{t("workflow.title")}</h2>
         <p className="error-text">{parsed.message}</p>
       </section>
     );
@@ -24,14 +26,16 @@ export function WorkflowBuilder({ snapshot }: WorkflowBuilderProps) {
 
   return (
     <section className="panel">
-      <h2>Workflow Builder</h2>
-      {parsed.value.stories.length === 0 ? <p>No stories found</p> : null}
+      <h2>{t("workflow.title")}</h2>
+      {parsed.value.stories.length === 0 ? <p>{t("workflow.noStories")}</p> : null}
       {cycles.length > 0 ? (
-        <div className="banner error-text">Dependency cycle: {cycles[0].join(" -> ")}</div>
+        <div className="banner error-text">
+          {t("workflow.dependencyCycle")}: {cycles[0].join(" -> ")}
+        </div>
       ) : null}
       {graph.missingDependencies.length > 0 ? (
         <div className="banner error-text">
-          <strong>Missing Dependencies</strong>
+          <strong>{t("workflow.missingDependencies")}</strong>
           <ul>
             {graph.missingDependencies.map((edge, index) => (
               <li key={`${edge.from}-${edge.to}-${index}`}>
@@ -57,7 +61,7 @@ export function WorkflowBuilder({ snapshot }: WorkflowBuilderProps) {
           </div>
         ))}
       </div>
-      <h3>Dependencies</h3>
+      <h3>{t("workflow.dependencies")}</h3>
       <ul>
         {graph.edges.map((edge, index) => (
           <li key={`${edge.from}-${edge.to}-${index}`}>

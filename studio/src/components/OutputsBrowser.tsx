@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { normalizeUnknownError } from "../lib/errors";
 import { listArtifacts } from "../lib/knot/tauri";
@@ -9,6 +10,7 @@ interface OutputsBrowserProps {
 }
 
 export function OutputsBrowser({ snapshot }: OutputsBrowserProps) {
+  const { t } = useTranslation();
   const [artifacts, setArtifacts] = useState<ArtifactEntry[]>([]);
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -44,18 +46,18 @@ export function OutputsBrowser({ snapshot }: OutputsBrowserProps) {
     <section className="panel">
       <div className="section-header">
         <div>
-          <h2>Outputs</h2>
-          <p>Browse generated outputs, review reports, and progress logs.</p>
+          <h2>{t("outputs.title")}</h2>
+          <p>{t("outputs.description")}</p>
         </div>
         <button className="primary-button" onClick={refreshArtifacts} disabled={loading}>
-          {loading ? "Refreshing..." : "Refresh"}
+          {loading ? t("outputs.refreshing") : t("outputs.refresh")}
         </button>
       </div>
       {error ? <p className="error-text">{error}</p> : null}
       <div className="artifact-browser">
-        <div className="artifact-list" aria-label="Artifacts">
+        <div className="artifact-list" aria-label={t("outputs.artifacts")}>
           {artifacts.length === 0 ? (
-            <p>No artifacts found.</p>
+            <p>{t("outputs.none")}</p>
           ) : (
             artifacts.map((artifact) => (
               <button
@@ -66,7 +68,7 @@ export function OutputsBrowser({ snapshot }: OutputsBrowserProps) {
               >
                 <span>{artifact.kind}</span>
                 <strong>{artifact.path}</strong>
-                {!artifact.exists ? <em>missing</em> : null}
+                {!artifact.exists ? <em>{t("outputs.missing")}</em> : null}
               </button>
             ))
           )}
@@ -78,10 +80,10 @@ export function OutputsBrowser({ snapshot }: OutputsBrowserProps) {
                 <span>{selectedArtifact.kind}</span>
                 <h3>{selectedArtifact.path}</h3>
               </div>
-              <pre>{selectedArtifact.contents || "(empty)"}</pre>
+              <pre>{selectedArtifact.contents || t("outputs.empty")}</pre>
             </>
           ) : (
-            <p>Select an artifact to preview it.</p>
+            <p>{t("outputs.select")}</p>
           )}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { detectDependencyCycles, taskboardToGraph } from "../lib/knot/graph";
 import type { RuntimeSnapshot, Taskboard } from "../lib/knot/types";
@@ -9,12 +10,13 @@ interface ValidationCenterProps {
 }
 
 export function ValidationCenter({ snapshot }: ValidationCenterProps) {
+  const { t } = useTranslation();
   const parsed = useMemo(() => parseTaskboard(snapshot.taskboardJson), [snapshot.taskboardJson]);
 
   if (!parsed.ok) {
     return (
       <section className="panel">
-        <h2>Validation Center</h2>
+        <h2>{t("validation.title")}</h2>
         <p className="error-text">{parsed.message}</p>
       </section>
     );
@@ -26,9 +28,9 @@ export function ValidationCenter({ snapshot }: ValidationCenterProps) {
 
   return (
     <section className="panel">
-      <h2>Validation Center</h2>
+      <h2>{t("validation.title")}</h2>
       {issues.length === 0 && cycles.length === 0 && missingDependencies.length === 0 ? (
-        <p>No client-side validation issues.</p>
+        <p>{t("validation.noIssues")}</p>
       ) : null}
       {issues.map((issue) => (
         <p key={`${issue.path}-${issue.message}`} className={issue.severity === "error" ? "error-text" : ""}>
@@ -37,12 +39,12 @@ export function ValidationCenter({ snapshot }: ValidationCenterProps) {
       ))}
       {cycles.map((cycle) => (
         <p key={cycle.join("-")} className="error-text">
-          <strong>dependency cycle</strong>: {cycle.join(" -> ")}
+          <strong>{t("validation.dependencyCycle")}</strong>: {cycle.join(" -> ")}
         </p>
       ))}
       {missingDependencies.map((dependency) => (
         <p key={`${dependency.from}-${dependency.to}`} className="error-text">
-          <strong>missing dependency</strong>: {`${dependency.from} -> ${dependency.to}`}
+          <strong>{t("validation.missingDependency")}</strong>: {`${dependency.from} -> ${dependency.to}`}
         </p>
       ))}
     </section>

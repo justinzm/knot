@@ -1,4 +1,5 @@
 import type { GateName, Story } from "../lib/knot/types";
+import { useTranslation } from "react-i18next";
 
 const gateOptions: GateName[] = [
   "existence",
@@ -17,19 +18,21 @@ interface StoryInspectorProps {
 }
 
 export function StoryInspector({ story, onChange }: StoryInspectorProps) {
+  const { t } = useTranslation();
+
   return (
     <aside className="validation-list">
-      <h3>Story Inspector</h3>
+      <h3>{t("storyInspector.title")}</h3>
       <label className="field">
-        <span>Title</span>
+        <span>{t("storyInspector.storyTitle")}</span>
         <input value={story.title} onChange={(event) => onChange({ ...story, title: event.target.value })} />
       </label>
       <label className="field">
-        <span>Stage</span>
+        <span>{t("storyInspector.stage")}</span>
         <input value={story.stage} onChange={(event) => onChange({ ...story, stage: event.target.value })} />
       </label>
       <label className="field">
-        <span>Status</span>
+        <span>{t("storyInspector.status")}</span>
         <select
           value={story.status}
           onChange={(event) => onChange({ ...story, status: event.target.value as Story["status"] })}
@@ -44,7 +47,7 @@ export function StoryInspector({ story, onChange }: StoryInspectorProps) {
         </select>
       </label>
       <label className="field">
-        <span>Priority</span>
+        <span>{t("storyInspector.priority")}</span>
         <input
           type="number"
           min={1}
@@ -54,7 +57,7 @@ export function StoryInspector({ story, onChange }: StoryInspectorProps) {
         />
       </label>
       <label className="field">
-        <span>Inputs, one per line</span>
+        <span>{t("storyInspector.inputs")}</span>
         <textarea
           rows={5}
           value={story.inputs.join("\n")}
@@ -70,7 +73,7 @@ export function StoryInspector({ story, onChange }: StoryInspectorProps) {
         />
       </label>
       <label className="field">
-        <span>Outputs, one per line</span>
+        <span>{t("storyInspector.outputs")}</span>
         <textarea
           rows={5}
           value={story.outputs.join("\n")}
@@ -86,7 +89,7 @@ export function StoryInspector({ story, onChange }: StoryInspectorProps) {
         />
       </label>
       <fieldset className="field">
-        <legend>Required gates</legend>
+        <legend>{t("storyInspector.requiredGates")}</legend>
         {gateOptions.map((gate) => (
           <label key={gate} className="checkbox-field">
             <input

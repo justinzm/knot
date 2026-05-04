@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 export type SectionId =
   | "overview"
@@ -12,17 +13,17 @@ export type SectionId =
   | "outputs"
   | "settings";
 
-const sections: Array<{ id: SectionId; label: string }> = [
-  { id: "overview", label: "Overview" },
-  { id: "brief", label: "Project Brief" },
-  { id: "spec", label: "Project Spec" },
-  { id: "workflow", label: "Workflow Builder" },
-  { id: "taskboard", label: "Taskboard" },
-  { id: "gates", label: "Gate Rules" },
-  { id: "validation", label: "Validation Center" },
-  { id: "run", label: "Run Console" },
-  { id: "outputs", label: "Outputs" },
-  { id: "settings", label: "Settings" },
+const sections: SectionId[] = [
+  "overview",
+  "brief",
+  "spec",
+  "workflow",
+  "taskboard",
+  "gates",
+  "validation",
+  "run",
+  "outputs",
+  "settings",
 ];
 
 interface AppShellProps {
@@ -40,6 +41,8 @@ export function AppShell({
   onSectionChange,
   children,
 }: AppShellProps) {
+  const { t } = useTranslation();
+
   return (
     <main className="app-frame">
       <aside className="sidebar">
@@ -47,19 +50,19 @@ export function AppShell({
         <nav>
           {sections.map((section) => (
             <button
-              key={section.id}
-              className={`nav-item ${activeSection === section.id ? "active" : ""}`}
-              aria-current={activeSection === section.id ? "page" : undefined}
-              onClick={() => onSectionChange(section.id)}
+              key={section}
+              className={`nav-item ${activeSection === section ? "active" : ""}`}
+              aria-current={activeSection === section ? "page" : undefined}
+              onClick={() => onSectionChange(section)}
             >
-              {section.label}
+              {t(`nav.${section}`)}
             </button>
           ))}
         </nav>
       </aside>
       <section className="workspace">
         <header className="topbar">
-          <span>{knotRoot ?? "No project selected"}</span>
+          <span>{knotRoot ?? t("app.noProjectSelected")}</span>
           <span className="status-pill">{status}</span>
         </header>
         {children}

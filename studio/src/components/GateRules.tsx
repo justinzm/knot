@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { RuntimeSnapshot, Taskboard } from "../lib/knot/types";
 
@@ -7,11 +8,12 @@ interface GateRulesProps {
 }
 
 export function GateRules({ snapshot }: GateRulesProps) {
+  const { t } = useTranslation();
   const parsed = useMemo(() => parseTaskboard(snapshot.taskboardJson), [snapshot.taskboardJson]);
   if (!parsed.ok) {
     return (
       <section className="panel">
-        <h2>Gate Rules</h2>
+        <h2>{t("gates.title")}</h2>
         <p className="error-text">{parsed.message}</p>
       </section>
     );
@@ -19,8 +21,8 @@ export function GateRules({ snapshot }: GateRulesProps) {
 
   return (
     <section className="panel">
-      <h2>Gate Rules</h2>
-      {parsed.value.stories.length === 0 ? <p>No stories found</p> : null}
+      <h2>{t("gates.title")}</h2>
+      {parsed.value.stories.length === 0 ? <p>{t("gates.noStories")}</p> : null}
       <div className="table-list">
         {parsed.value.stories.map((story, index) => (
           <article className="table-row" key={`${story.id}-${index}`}>
@@ -29,7 +31,7 @@ export function GateRules({ snapshot }: GateRulesProps) {
               <p>{story.title}</p>
             </div>
             <div>{story.review_policy.required_gates.join(", ")}</div>
-            <div>{story.review_policy.blocking === false ? "non-blocking" : "blocking"}</div>
+            <div>{story.review_policy.blocking === false ? t("gates.nonBlocking") : t("gates.blocking")}</div>
           </article>
         ))}
       </div>
