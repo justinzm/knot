@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Knot Workbench",
+  "version": "0.1.0",
+  "identifier": "app.knot.workbench",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Knot Workbench",
+        "width": 1180,
+        "height": 760,
+        "minWidth": 960,
+        "minHeight": 640
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "app",
+    "category": "DeveloperTool",
+    "publisher": "Knot Workbench",
+    "shortDescription": "用于准备和运行 Knot runtime 项目的桌面工作台。",
+    "longDescription": "Knot Workbench 提供项目检测、运行时生成、校验保存、预检执行、循环运行与产物浏览能力。",
+    "resources": [
+      "resources/knot-template/**/*",
+      "resources/prompts/**/*"
+    ],
+    "macOS": {
+      "minimumSystemVersion": "12.0"
+    },
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

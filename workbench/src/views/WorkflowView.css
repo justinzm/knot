@@ -1,0 +1,90 @@
+@import "./RuntimeView.css";
+
+.workflow-grid {
+  display: grid;
+  grid-template-columns: minmax(420px, 1.2fr) minmax(320px, 0.8fr);
+  gap: 16px;
+}
+
+.workflow-graph,
+.taskboard-table {
+  grid-column: 1 / -1;
+}
+
+.stage-lanes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.stage-lane {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 150px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  background: var(--bg-subtle);
+}
+
+.stage-lane h3 {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.story-node {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  color: var(--text-primary);
+  text-align: left;
+  background: var(--bg-panel);
+}
+
+.story-node[data-active="true"],
+.taskboard-table tr[data-active="true"] {
+  outline: 2px solid var(--accent);
+}
+
+.taskboard-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.taskboard-table th,
+.taskboard-table td {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 9px;
+  text-align: left;
+}
+
+.taskboard-table button {
+  color: var(--text-primary);
+  background: transparent;
+}
+
+.taskboard-table input {
+  width: 76px;
+}
+
+.dependency-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.dependency-list label {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 1120px) {
+  .workflow-grid,
+  .stage-lanes {
+    grid-template-columns: 1fr;
+  }
+}

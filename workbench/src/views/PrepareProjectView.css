@@ -1,0 +1,141 @@
+.prepare-view {
+  display: grid;
+  gap: 18px;
+}
+
+.prepare-hero,
+.prepare-panel {
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--bg-panel);
+}
+
+.prepare-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px;
+}
+
+.prepare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.prepare-panel {
+  padding: 18px;
+}
+
+.prepare-panel h2 {
+  margin: 0 0 14px;
+  font-size: 17px;
+}
+
+.prepare-panel p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panel-heading button,
+.recent-panel button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+  cursor: pointer;
+}
+
+.cli-list {
+  display: grid;
+  gap: 8px;
+}
+
+.cli-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 10px;
+}
+
+.cli-list div span {
+  color: var(--text-muted);
+}
+
+.cli-list .is-available span {
+  color: var(--success);
+}
+
+.warning-text {
+  color: var(--warning);
+}
+
+.settings-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.settings-panel label {
+  display: grid;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.settings-panel input,
+.settings-panel select,
+.settings-panel textarea {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 9px 10px;
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+  font: inherit;
+}
+
+.settings-panel textarea {
+  resize: vertical;
+}
+
+.notice-message {
+  margin: 0;
+  border: 1px solid color-mix(in srgb, var(--success) 42%, transparent);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+}
+
+.recent-panel {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.recent-panel button {
+  display: grid;
+  width: 100%;
+  text-align: left;
+}
+
+.recent-panel button span {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

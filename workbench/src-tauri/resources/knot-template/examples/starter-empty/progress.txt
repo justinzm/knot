@@ -1,0 +1,3 @@
+# Knot Progress Log
+Initialized: replace-with-iso-timestamp
+---

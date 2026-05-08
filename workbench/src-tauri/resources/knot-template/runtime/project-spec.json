@@ -1,0 +1,35 @@
+{
+  "project_id": "replace-with-project-id",
+  "project_type": "content-production",
+  "target_medium": "replace-with-target-medium",
+  "language": "en",
+  "audience": "replace-with-audience",
+  "style": {
+    "voice": "replace-with-voice",
+    "visual_style": "replace-with-visual-or-format-style",
+    "tone": "replace-with-tone"
+  },
+  "workflow": {
+    "stages": [
+      "replace-with-first-stage"
+    ],
+    "artifact_root": "outputs/",
+    "fact_root": "facts/",
+    "review_root": "reviews/"
+  },
+  "review_policy": {
+    "required_gates": [
+      "existence",
+      "structure",
+      "business",
+      "compliance"
+    ],
+    "notes": "Replace this with project-specific review rules."
+  },
+  "naming": {
+    "story_prefix": "ST",
+    "artifact_convention": "Replace this with path and filename conventions for generated outputs."
+  },
+  "metadata": {},
+  "extensions": {}
+}

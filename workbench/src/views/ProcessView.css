@@ -1,0 +1,91 @@
+.process-view {
+  min-height: 100%;
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.8fr) minmax(420px, 1.2fr);
+  gap: 16px;
+}
+
+.process-panel {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  background: var(--bg-panel);
+  box-shadow: var(--shadow-panel);
+}
+
+.process-panel pre {
+  max-height: 440px;
+  margin: 0;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.json-preview,
+.run-console {
+  grid-column: 1 / -1;
+}
+
+.check-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.check-list li {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  background: var(--bg-subtle);
+}
+
+.check-list li[data-status="pass"] {
+  border-color: var(--success);
+}
+
+.check-list li[data-status="fail"] {
+  border-color: var(--danger);
+}
+
+.check-list p,
+.check-list small {
+  display: block;
+  margin: 5px 0 0;
+  color: var(--text-muted);
+}
+
+.run-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.summary-grid span {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  background: var(--bg-subtle);
+}
+
+@media (max-width: 980px) {
+  .process-grid,
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}

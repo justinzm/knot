@@ -1,0 +1,40 @@
+.inspector-panel {
+  min-height: 100vh;
+  padding: 20px;
+  background: var(--bg-panel);
+}
+
+.inspector-kicker {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.inspector-panel h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.inspector-panel p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.inspector-section {
+  margin-top: 18px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  background: var(--bg-subtle);
+}
+
+.inspector-section h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.inspector-section span {
+  color: var(--text-muted);
+  font-size: 13px;
+}

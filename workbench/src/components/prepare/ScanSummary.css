@@ -1,0 +1,32 @@
+.scan-summary {
+  grid-column: 1 / -1;
+}
+
+.scan-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.scan-grid h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.scan-grid ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.scan-grid p {
+  margin: 0;
+}
+
+.scan-grid .primary-action {
+  grid-column: 1 / -1;
+}

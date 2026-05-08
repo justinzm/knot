@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Knot Review Result",
+  "description": "Formal schema for one review result produced during a Knot story.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "review_id",
+    "story_id",
+    "review_type",
+    "reviewer",
+    "status",
+    "created_at",
+    "summary",
+    "artifact_paths",
+    "findings"
+  ],
+  "properties": {
+    "review_id": {
+      "type": "string",
+      "pattern": "^RV-[0-9]{3,}$"
+    },
+    "story_id": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,5}-[0-9]{3,}$"
+    },
+    "review_type": {
+      "type": "string",
+      "enum": [
+        "existence",
+        "structure",
+        "business",
+        "compliance",
+        "continuity",
+        "editorial",
+        "brand",
+        "custom"
+      ]
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 120
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "blocked",
+        "manual_check_required"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 2000
+    },
+    "artifact_paths": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/pathLike"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "findings": {
+      "type": "array",
+      "description": "Specific issues or confirmations that support the review decision.",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "next_status": {
+          "type": "string",
+          "enum": [
+            "ready",
+            "in_progress",
+            "in_review",
+            "needs_revision",
+            "blocked",
+            "done"
+          ]
+        },
+        "can_proceed": {
+          "type": "boolean"
+        },
+        "requires_human_signoff": {
+          "type": "boolean"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "pathLike": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:\\\\)(?!/)(?!\\.\\./).+"
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "severity",
+        "message"
+      ],
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "blocker"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 2000
+        },
+        "gate": {
+          "type": "string",
+          "enum": [
+            "existence",
+            "structure",
+            "business",
+            "compliance",
+            "continuity",
+            "editorial",
+            "brand",
+            "custom"
+          ]
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "artifact_path": {
+          "$ref": "#/$defs/pathLike"
+        },
+        "suggestion": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "code": {
+          "type": "string",
+          "maxLength": 80
+        }
+      }
+    }
+  }
+}

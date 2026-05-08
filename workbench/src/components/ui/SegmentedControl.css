@@ -1,0 +1,22 @@
+.segmented-control {
+  display: inline-flex;
+  gap: 2px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  background: var(--bg-subtle);
+}
+
+.segmented-control button {
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.segmented-control button.is-active {
+  color: var(--text-primary);
+  background: var(--bg-panel-strong);
+}

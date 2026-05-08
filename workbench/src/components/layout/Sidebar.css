@@ -1,0 +1,112 @@
+.sidebar {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 100vh;
+  border-right: 1px solid var(--border-subtle);
+  padding: 18px 14px;
+  background: var(--bg-panel);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 4px 18px;
+}
+
+.sidebar-brand strong,
+.sidebar-project strong {
+  display: block;
+  color: var(--text-primary);
+}
+
+.sidebar-brand small,
+.sidebar-project span {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.knot-logo {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+}
+
+.knot-logo span {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--bg-panel);
+}
+
+.knot-logo span:nth-child(1) {
+  top: 7px;
+  left: 7px;
+}
+
+.knot-logo span:nth-child(2) {
+  top: 13px;
+  right: 7px;
+}
+
+.knot-logo span:nth-child(3) {
+  right: 13px;
+  bottom: 7px;
+}
+
+.nav-list {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+}
+
+.nav-list button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius-md);
+  padding: 10px 11px;
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.nav-list button:hover,
+.nav-list button.is-active {
+  color: var(--text-primary);
+  background: var(--bg-panel-strong);
+}
+
+.nav-list button.is-active {
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.sidebar-project {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  background: var(--bg-subtle);
+}
+
+.sidebar-project button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  color: var(--text-secondary);
+  background: var(--bg-panel);
+  cursor: pointer;
+}

@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Knot Story",
+  "description": "Formal schema for one executable Knot story.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "stage",
+    "description",
+    "priority",
+    "status",
+    "inputs",
+    "outputs",
+    "dependencies",
+    "acceptance_criteria",
+    "review_policy",
+    "notes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,5}-[0-9]{3,}$",
+      "description": "Stable story identifier, such as ST-001."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160
+    },
+    "stage": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 80
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 4000
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "todo",
+        "ready",
+        "in_progress",
+        "in_review",
+        "needs_revision",
+        "blocked",
+        "done"
+      ]
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Explicit project-relative file paths or artifact references used by the story.",
+      "items": {
+        "$ref": "#/$defs/pathLike"
+      },
+      "uniqueItems": true
+    },
+    "outputs": {
+      "type": "array",
+      "description": "Explicit project-relative artifact paths produced or updated by the story.",
+      "items": {
+        "$ref": "#/$defs/pathLike"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Upstream story IDs that must already be done.",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2,5}-[0-9]{3,}$"
+      },
+      "uniqueItems": true
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 400
+      },
+      "minItems": 1
+    },
+    "review_policy": {
+      "$ref": "#/$defs/reviewPolicy"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 4000
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Structured, project-specific metadata that should remain machine-readable.",
+      "additionalProperties": true
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Open extension point for workflow-specific keys not covered by the core schema.",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "pathLike": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:\\\\)(?!/)(?!\\.\\./).+",
+      "description": "Project-relative path or reference. Absolute paths and parent traversal are disallowed."
+    },
+    "gateName": {
+      "type": "string",
+      "enum": [
+        "existence",
+        "structure",
+        "business",
+        "compliance",
+        "continuity",
+        "editorial",
+        "brand",
+        "custom"
+      ]
+    },
+    "reviewPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_gates"
+      ],
+      "properties": {
+        "required_gates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/gateName"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "reviewers": {
+          "type": "array",
+          "description": "Named reviewers, roles, or reviewer types expected to sign off on the story.",
+          "items": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          },
+          "uniqueItems": true
+        },
+        "max_revision_rounds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blocking": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether a failed review must block completion."
+        },
+        "review_artifacts": {
+          "type": "array",
+          "description": "Optional paths where review result files are expected to be written.",
+          "items": {
+            "$ref": "#/$defs/pathLike"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}
