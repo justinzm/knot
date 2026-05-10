@@ -25,3 +25,11 @@ docs/superpowers/
 # Optional local-only runtime inputs
 knot/runtime/project-spec.local.json
 knot/runtime/taskboard.local.json
+
+宣传资料
+宣传资料/
+宣传资料/*
+
+workbench
+workbench/
+workbench/*
